@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>岡山七日 · 旅行草稿</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%91%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ground:#EEF0E4;        /* 麝香葡萄乳白 */
+    --text:#24302E;          /* 瀨戶內海深藍墨 */
+    --accent:#E2876B;        /* 白桃粉 */
+    --accent-2:#93A646;      /* 麝香葡萄綠 */
+    --sea:#2C5560;           /* 瀨戶內海 */
+    --surface:#F8F9F1;       /* 卡片面 */
+    --peach-wash:#F6E6DD;    /* 桃色淡底 */
+    --line:#D4D8C6;          /* 髮絲線 */
+    --muted:#5C6660;         /* 次要文字 */
+
+    --serif:"Noto Serif TC","Songti TC","Source Han Serif TC","Yu Mincho",serif;
+    --sans:"Hiragino Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    --label:ui-sans-serif,"Helvetica Neue",Arial,system-ui,sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--ground);color:var(--text);
+    font-family:var(--sans);line-height:1.7;
+    font-size:16px;letter-spacing:.01em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:740px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:var(--label);font-size:12px;font-weight:600;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--accent-2);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);}
+  #sea{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .hero-inner{
+    position:relative;z-index:2;max-width:740px;margin:0 auto;
+    padding:62px 22px 40px;
+  }
+  .hero h1{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(44px,15vw,86px);line-height:.98;
+    margin:.18em 0 .1em;letter-spacing:.02em;
+  }
+  .hero h1 .sep{color:var(--accent);}
+  .hero .dates{
+    font-family:var(--label);font-size:14px;letter-spacing:.16em;
+    color:var(--sea);font-weight:600;
+  }
+  .thesis{
+    font-family:var(--serif);font-size:clamp(17px,4.6vw,21px);
+    color:var(--text);margin:20px 0 0;max-width:30ch;line-height:1.55;
+  }
+  .facts{
+    display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;
+  }
+  .facts span{
+    font-size:13px;background:rgba(255,255,255,.55);
+    border:1px solid var(--line);border-radius:999px;
+    padding:5px 13px;color:var(--text);backdrop-filter:blur(2px);
+  }
+  .to-feedback{
+    display:inline-block;margin-top:26px;font-size:14px;font-weight:600;
+    color:var(--text);text-decoration:none;
+    border-bottom:2px solid var(--accent);padding-bottom:2px;
+  }
+
+  /* ---------- section frame ---------- */
+  section{padding:54px 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  .sec-head{margin-bottom:30px;}
+  .sec-head h2{
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(26px,7vw,36px);margin:.32em 0 0;line-height:1.15;
+  }
+
+  /* ---------- overview ---------- */
+  .ov{list-style:none;margin:0;padding:0;}
+  .ov li{
+    display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:baseline;
+    padding:13px 0;border-bottom:1px solid var(--line);
+  }
+  .ov li:last-child{border-bottom:none;}
+  .ov .d{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:700;}
+  .ov .t{font-weight:600;}
+  .ov .t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;letter-spacing:.04em;font-family:var(--label);margin-top:1px;}
+  .ov .w{font-family:var(--label);font-size:12px;color:var(--muted);letter-spacing:.08em;}
+
+  /* ---------- open questions ---------- */
+  .ask{background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:16px;padding:26px 22px;}
+  .ask .eyebrow{color:var(--accent);}
+  .ask h2{font-family:var(--serif);font-size:clamp(24px,6.5vw,32px);font-weight:700;margin:.3em 0 .1em;}
+  .ask p.lead{margin:.2em 0 1.4em;color:var(--text);}
+  .q{padding:16px 0;border-top:1px dashed #E0B8A8;}
+  .q:first-of-type{border-top:none;padding-top:4px;}
+  .q b{display:block;font-size:16.5px;margin-bottom:3px;}
+  .q span{color:var(--muted);font-size:14.5px;}
+  .q .pin{color:var(--accent);font-weight:700;}
+
+  /* ---------- day timeline ---------- */
+  .days{position:relative;}
+  .day{
+    position:relative;padding:0 0 12px 0;margin-bottom:30px;
+  }
+  .day-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px;}
+  .num{
+    font-family:var(--serif);font-weight:700;font-size:40px;line-height:.9;
+    color:var(--accent);min-width:64px;
+  }
+  .num small{display:block;font-family:var(--label);font-size:11px;letter-spacing:.18em;color:var(--accent-2);font-weight:600;margin-top:6px;}
+  .day-title{flex:1;}
+  .day-title .dt{font-family:var(--label);font-size:12.5px;letter-spacing:.1em;color:var(--muted);}
+  .day-title h3{font-family:var(--serif);font-size:23px;font-weight:700;margin:2px 0 0;line-height:1.2;}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 6px;
+  }
+  .leg{display:flex;gap:13px;padding:0 0 14px;}
+  .leg .when{
+    font-family:var(--label);font-size:11.5px;font-weight:700;letter-spacing:.08em;
+    color:var(--sea);min-width:42px;padding-top:3px;text-transform:uppercase;
+  }
+  .leg .what{flex:1;}
+  .leg .what b{font-weight:600;}
+  .leg .what small{display:block;color:var(--muted);font-size:13.5px;margin-top:1px;}
+  .tag{
+    display:inline-block;font-family:var(--label);font-size:11px;font-weight:700;
+    letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin:0 0 16px;
+  }
+  .tag.set{background:#E4EBD2;color:#566B22;}
+  .tag.open{background:var(--accent);color:#fff;}
+  .note{font-size:13px;color:var(--muted);margin:0 0 16px;padding-left:13px;border-left:2px solid var(--accent-2);}
+
+  /* ---------- candidates ---------- */
+  .cand{display:grid;gap:12px;}
+  .cand div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .cand b{display:block;margin-bottom:2px;}
+  .cand small{color:var(--muted);font-size:14px;}
+
+  /* ---------- tips ---------- */
+  .tips{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
+  .tips li{display:flex;gap:12px;}
+  .tips .ic{font-size:18px;line-height:1.4;}
+  .tips b{font-weight:600;}
+  .tips small{display:block;color:var(--muted);font-size:14px;}
+
+  footer{padding:46px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;}
+  footer .pill{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:14px;font-family:var(--label);letter-spacing:.06em;}
+
+  a{color:var(--sea);}
+
+  /* entrance */
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.in{opacity:1;transform:none;}
+  }
+  :focus-visible{outline:2px solid var(--sea);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="sea" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="eyebrow">旅行計畫 · 討論草稿</p>
+    <p class="dates">2026.09.27 – 10.03 · 瀨戶內海</p>
+    <h1>岡山<span class="sep">·</span>七日</h1>
+    <p class="thesis">以岡山為家，每天往瀨戶內海的不同方向出發——庭園、運河老街、藝術離島、跨海大橋、白鷺名城。</p>
+    <div class="facts">
+      <span>4 人 · 含 2 位長輩</span>
+      <span>後樂飯店（站旁）</span>
+      <span>大眾運輸</span>
+      <span>悠閒步調</span>
+    </div>
+    <a class="to-feedback" href="#ask">還沒決定的事，想聽你的 ↓</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section aria-label="行程總覽">
+    <div class="sec-head">
+      <p class="eyebrow">Overview</p>
+      <h2>七天，一眼看完</h2>
+    </div>
+    <ul class="ov">
+      <li><span class="d">1</span><span class="t">抵達 · 岡山夜色<small>降落、進飯店、看烏城夜間點燈</small></span><span class="w">9/27 日</span></li>
+      <li><span class="d">2</span><span class="t">彈性日<small>剛到的隔天，輕鬆／可加景點</small></span><span class="w">9/28 一</span></li>
+      <li><span class="d">3</span><span class="t">倉敷 × 吉備路<small>白牆老街、稻田中的五重塔</small></span><span class="w">9/29 二</span></li>
+      <li><span class="d">4</span><span class="t">直島 · 藝術跳島<small>草間彌生南瓜、藝術老屋</small></span><span class="w">9/30 三</span></li>
+      <li><span class="d">5</span><span class="t">瀨戶大橋全餐<small>看橋、跨橋、高松名園</small></span><span class="w">10/1 四</span></li>
+      <li><span class="d">6</span><span class="t">姬路城<small>國寶白鷺城</small></span><span class="w">10/2 五</span></li>
+      <li><span class="d">7</span><span class="t">後樂園 · 回家<small>三名園散步後出發</small></span><span class="w">10/3 六</span></li>
+    </ul>
+  </section>
+
+  <section id="ask" aria-label="待決定">
+    <div class="ask reveal">
+      <p class="eyebrow">想聽聽你的意見</p>
+      <h2>這幾件事還沒定</h2>
+      <p class="lead">行程是草稿，下面幾個地方留給大家一起決定。看到有想法就跟我說 👌</p>
+      <div class="q">
+        <b>① Day 2（9/28）一整天還空著</b>
+        <span>剛到的隔天，刻意留彈性。想<span class="pin">好好休息</span>？還是<span class="pin">加個景點</span>？（備選見最後一段）</span>
+      </div>
+      <div class="q">
+        <b>② 直島要不要進「地中美術館」</b>
+        <span>莫內、Turrell 的光影名作，很震撼，但<span class="pin">要先上網預約、平日每人 ¥2,500、走較多路</span>。不進的話照樣有雙南瓜＋藝術老屋＋海景，輕鬆很多。</span>
+      </div>
+      <div class="q">
+        <b>③ 有沒有「一定想去」的點？</b>
+        <span>現在最好喬——還有空間調整。看看最後的<span class="pin">備選景點</span>，或你心裡其他口袋名單。</span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="每日行程">
+    <div class="sec-head">
+      <p class="eyebrow">Day by day</p>
+      <h2>每日行程</h2>
+    </div>
+
+    <div class="days">
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">01<small>DAY</small></div>
+          <div class="day-title"><div class="dt">9 / 27　星期日</div><h3>抵達 · 岡山夜色</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag set">已定</span>
+          <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>利木津巴士約 30 分 → 岡山站 → 後樂飯店</small></div></div>
+          <div class="leg"><div class="when">傍晚</div><div class="what"><b>西川綠道公園散步</b><small>飯店旁，舒展一下</small></div></div>
+          <div class="leg"><div class="when">晚上</div><div class="what"><b>接風晚餐 ＋ 烏城夜景</b><small>散步看岡山城「烏城」夜間點燈，外觀免費</small></div></div>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">02<small>DAY</small></div>
+          <div class="day-title"><div class="dt">9 / 28　星期一</div><h3>彈性日</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag open">待大家決定</span>
+          <div class="leg"><div class="when">整天</div><div class="what"><b>保留彈性</b><small>剛抵達的隔天，當輕鬆／調時差日。想加景點？看最後的備選清單，或提你想去的。</small></div></div>
+          <p class="note">這天空著是故意的——好讓大家有想去的地方時，最有餘裕塞進來。</p>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">03<small>DAY</small></div>
+          <div class="day-title"><div class="dt">9 / 29　星期二</div><h3>倉敷 × 吉備路</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag set">已定</span>
+          <div class="leg"><div class="when">上午</div><div class="what"><b>倉敷美觀地區 ＋ 大原美術館</b><small>白牆運河老街。趁 9 點前到，人少像包場</small></div></div>
+          <div class="leg"><div class="when">下午</div><div class="what"><b>吉備路田園</b><small>備中國分寺五重塔（立在稻田中的招牌風景）／吉備津神社（國寶）</small></div></div>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">04<small>DAY</small></div>
+          <div class="day-title"><div class="dt">9 / 30　星期三</div><h3>直島 · 藝術跳島</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag open">部分待決定</span>
+          <div class="leg"><div class="when">去程</div><div class="what"><b>岡山 → 宇野港 → 渡輪上島</b><small>電車直達約 1 小時＋渡輪 20 分</small></div></div>
+          <div class="leg"><div class="when">島上</div><div class="what"><b>草間彌生紅／黃南瓜 · 本村藝術老屋</b><small>搭早班船先攻人氣點，平坦好走</small></div></div>
+          <div class="leg"><div class="when">選配</div><div class="what"><b>地中美術館（待決定）</b><small>見上方「待決定 ②」</small></div></div>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">05<small>DAY</small></div>
+          <div class="day-title"><div class="dt">10 / 1　星期四</div><h3>瀨戶大橋全餐</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag set">已定 · 滿檔日</span>
+          <div class="leg"><div class="when">上午</div><div class="what"><b>鷲羽山展望台「看橋」</b><small>眺望瀨戶大橋橫跨島嶼、遠及四國</small></div></div>
+          <div class="leg"><div class="when">中午</div><div class="what"><b>Marine Liner 跨海「坐橋」</b><small>搭電車直接開過瀨戶大橋到高松</small></div></div>
+          <div class="leg"><div class="when">下午</div><div class="what"><b>高松 · 栗林公園</b><small>媲美名園的大庭園，平坦悠閒</small></div></div>
+          <p class="note">移動較多的一天，但景點本身不累（看風景＋平坦庭園），主要是搭車。</p>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">06<small>DAY</small></div>
+          <div class="day-title"><div class="dt">10 / 2　星期五</div><h3>姬路城</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag set">已定</span>
+          <div class="leg"><div class="when">上午</div><div class="what"><b>姬路城（一開門就進）</b><small>國寶・世界遺產白鷺城。趕在團客前最順</small></div></div>
+          <div class="leg"><div class="when">順遊</div><div class="what"><b>好古園</b><small>城旁的日式庭園</small></div></div>
+          <p class="note">天守閣內樓梯較陡，想省力可只逛外觀與庭園。</p>
+        </div>
+      </article>
+
+      <article class="day reveal">
+        <div class="day-head">
+          <div class="num">07<small>DAY</small></div>
+          <div class="day-title"><div class="dt">10 / 3　星期六</div><h3>後樂園 · 回家</h3></div>
+        </div>
+        <div class="card">
+          <span class="tag set">已定</span>
+          <div class="leg"><div class="when">上午</div><div class="what"><b>後樂園</b><small>日本三名園之一，離飯店最近。行李寄放飯店，玩完再拿</small></div></div>
+          <div class="leg"><div class="when">13:00</div><div class="what"><b>機場巴士 → 岡山機場</b><small>15:55 起飛</small></div></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section aria-label="備選景點">
+    <div class="sec-head">
+      <p class="eyebrow">Maybe</p>
+      <h2>備選景點</h2>
+    </div>
+    <div class="cand">
+      <div class="reveal"><b>兒島牛仔褲街</b><small>日本國產丹寧發源地，職人店家、藍染、藍色霜淇淋。和 Day 5 鷲羽山同區，可順道。</small></div>
+      <div class="reveal"><b>舊閑谷學校</b><small>國寶，世界最古的庶民公學校，秋天紅葉與楷樹很美。</small></div>
+      <div class="reveal"><b>備前燒之鄉（伊部）</b><small>千年陶藝小鎮，看窯元，也能自己體驗捏陶。</small></div>
+      <div class="reveal"><b>牛窗 · 橄欖園</b><small>有「日本愛琴海」之稱的海景與橄欖園。</small></div>
+    </div>
+  </section>
+
+  <section aria-label="小提醒">
+    <div class="sec-head">
+      <p class="eyebrow">Good to know</p>
+      <h2>幾個小提醒</h2>
+    </div>
+    <ul class="tips">
+      <li><span class="ic">🌅</span><div><b>早起換空景</b><small>熱門點（倉敷、姬路城）都排在一開門、人潮湧入前抵達。</small></div></li>
+      <li><span class="ic">🛍️</span><div><b>購物排在晚上</b><small>商店街、藥妝開到晚，晚餐後想逛的人可以自由行動。</small></div></li>
+      <li><span class="ic">🍽️</span><div><b>用餐</b><small>有人不吃海鮮（熟魚可以），找餐廳會挑有熟魚或肉類的選擇。</small></div></li>
+      <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排，對長輩友善。</small></div></li>
+    </ul>
+  </section>
+
+  <footer>
+    <span class="pill">DRAFT · 會持續更新</span>
+    <p>這是討論用草稿，內容還會調整。<br>有任何想法、想去的地方，都歡迎提出來一起喬。</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  /* ---- Seto Inland Sea hero backdrop ---- */
+  var c=document.getElementById('sea'),x=c.getContext('2d'),DPR=Math.min(window.devicePixelRatio||1,2);
+  function draw(){
+    var host=c.parentElement,W=host.clientWidth,H=host.clientHeight;
+    c.width=W*DPR;c.height=H*DPR;c.style.width=W+'px';c.style.height=H+'px';
+    x.setTransform(DPR,0,0,DPR,0,0);
+    // sky: muscat-pale top → peach → sea
+    var g=x.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#EEF0E4');
+    g.addColorStop(.42,'#F1E3D8');
+    g.addColorStop(.66,'#E8C9B6');
+    g.addColorStop(1,'#2C5560');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    // soft sun (white peach)
+    var sx=W*0.74,sy=H*0.40,r=Math.max(46,W*0.10);
+    var sg=x.createRadialGradient(sx,sy,0,sx,sy,r*2.2);
+    sg.addColorStop(0,'rgba(226,135,107,.95)');
+    sg.addColorStop(.5,'rgba(226,135,107,.28)');
+    sg.addColorStop(1,'rgba(226,135,107,0)');
+    x.fillStyle=sg;x.beginPath();x.arc(sx,sy,r*2.2,0,7);x.fill();
+    x.fillStyle='#E2876B';x.beginPath();x.arc(sx,sy,r*0.62,0,7);x.fill();
+    // island silhouettes along the horizon
+    var hz=H*0.72;
+    function island(cx,w,h,col){
+      x.fillStyle=col;x.beginPath();x.moveTo(cx-w,hz);
+      x.quadraticCurveTo(cx-w*0.3,hz-h,cx,hz-h*0.92);
+      x.quadraticCurveTo(cx+w*0.4,hz-h*0.8,cx+w,hz);
+      x.closePath();x.fill();
+    }
+    island(W*0.20,W*0.26,H*0.16,'rgba(44,85,96,.55)');
+    island(W*0.62,W*0.34,H*0.22,'rgba(44,85,96,.78)');
+    island(W*0.92,W*0.24,H*0.14,'rgba(44,85,96,.62)');
+    // sea wash below horizon
+    x.fillStyle='rgba(36,48,46,.18)';x.fillRect(0,hz,W,H-hz);
+  }
+  draw();
+  var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,120);});
+
+  /* ---- gentle reveal on scroll ---- */
+  if(window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+</body>
+</html>

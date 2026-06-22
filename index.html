@@ -152,6 +152,19 @@
   .tips b{font-weight:600;}
   .tips small{display:block;color:var(--muted);font-size:14px;}
 
+  /* ---------- live transit links ---------- */
+  .links-note{color:var(--muted);font-size:14px;margin:0 0 4px;}
+  .links-sub{font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2);margin:24px 0 10px;}
+  .links{display:grid;gap:10px;}
+  .links a{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:13px 16px;text-decoration:none;color:var(--text);font-weight:600;line-height:1.3;
+  }
+  .links a small{color:var(--muted);font-weight:400;font-size:12.5px;text-align:right;flex:0 0 auto;}
+  .links a .lt{display:flex;align-items:center;gap:7px;}
+  .links a .lt::after{content:"↗";color:var(--accent);font-size:14px;}
+
   footer{padding:46px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;}
   footer .pill{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:14px;font-family:var(--label);letter-spacing:.06em;}
 
@@ -346,6 +359,32 @@
       <li><span class="ic">🍽️</span><div><b>用餐</b><small>有人不吃海鮮（熟魚可以），找餐廳會挑有熟魚或肉類的選擇。</small></div></li>
       <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排，對長輩友善。</small></div></li>
     </ul>
+  </section>
+
+  <section aria-label="交通時刻表速查">
+    <div class="sec-head">
+      <p class="eyebrow">Live check</p>
+      <h2>交通時刻表速查</h2>
+    </div>
+    <p class="links-note">當天或前一晚在飯店打開，點進去查最新班次。班次以官方／現場為準。</p>
+
+    <p class="links-sub">萬用即時查詢 · 輸入起訖站</p>
+    <div class="links">
+      <a href="https://www.jorudan.co.jp/" target="_blank" rel="noopener"><span class="lt">Jorudan 乗換案內</span><small>電車轉乘</small></a>
+      <a href="https://transit.yahoo.co.jp/" target="_blank" rel="noopener"><span class="lt">Yahoo! 乗換案內</span><small>電車轉乘</small></a>
+      <a href="https://www.google.com/maps" target="_blank" rel="noopener"><span class="lt">Google Maps</span><small>含步行・巴士</small></a>
+    </div>
+
+    <p class="links-sub">各段官方時刻表</p>
+    <div class="links">
+      <a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener"><span class="lt">機場利木津巴士</span><small>機場 ↔ 岡山站</small></a>
+      <a href="https://www.jr-odekake.net/" target="_blank" rel="noopener"><span class="lt">JR 在來線・マリンライナー</span><small>倉敷・總社・兒島・高松</small></a>
+      <a href="https://shimoden.net/rosen/rosen/timetable/tokohai.html" target="_blank" rel="noopener"><span class="lt">鷲羽山「とこはい號」巴士</span><small>兒島 ↔ 展望台</small></a>
+      <a href="https://ekitan.com/transit/shinkansen/section/sf-6489/st-5884" target="_blank" rel="noopener"><span class="lt">山陽新幹線</span><small>岡山 ↔ 姬路</small></a>
+      <a href="https://www.kotoden.co.jp/" target="_blank" rel="noopener"><span class="lt">琴電</span><small>高松築港 ↔ 栗林公園</small></a>
+      <a href="https://ritsuringarden.com/" target="_blank" rel="noopener"><span class="lt">栗林公園</span><small>開園時間</small></a>
+      <a href="https://okayama-korakuen.jp/" target="_blank" rel="noopener"><span class="lt">岡山後樂園</span><small>開園時間</small></a>
+    </div>
   </section>
 
   <footer>

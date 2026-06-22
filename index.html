@@ -123,14 +123,24 @@
     background:var(--surface);border:1px solid var(--line);border-radius:14px;
     padding:18px 18px 6px;
   }
-  .leg{display:flex;gap:13px;padding:0 0 14px;}
+  .leg{display:flex;gap:12px;padding:0 0 13px;}
   .leg .when{
-    font-family:var(--label);font-size:11.5px;font-weight:700;letter-spacing:.08em;
-    color:var(--sea);min-width:42px;padding-top:3px;text-transform:uppercase;
+    font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.03em;
+    color:var(--sea);min-width:52px;padding-top:2px;
   }
   .leg .what{flex:1;}
   .leg .what b{font-weight:600;}
   .leg .what small{display:block;color:var(--muted);font-size:13.5px;margin-top:1px;}
+  /* transit leg (lighter, with live link) */
+  .leg.t{padding-bottom:11px;}
+  .leg.t .when{color:var(--accent-2);}
+  .leg.t .what{font-size:13px;color:var(--muted);align-self:center;}
+  .leg.t .what .rt{color:var(--text);}
+  .leg.t .what a{font-weight:700;color:var(--sea);white-space:nowrap;}
+  /* fixed low-frequency warning */
+  .warn{display:flex;gap:9px;align-items:flex-start;background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:10px;padding:10px 13px;margin:0 0 14px 0;font-size:13px;line-height:1.5;}
+  .warn .ic{font-size:15px;flex:0 0 auto;}
+  .warn b{color:#C2542F;}
   .tag{
     display:inline-block;font-family:var(--label);font-size:11px;font-weight:700;
     letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin:0 0 16px;
@@ -151,18 +161,6 @@
   .tips .ic{font-size:18px;line-height:1.4;}
   .tips b{font-weight:600;}
   .tips small{display:block;color:var(--muted);font-size:14px;}
-
-  /* ---------- per-day transit schedule (expandable) ---------- */
-  .sched{margin:2px 0 14px;border-top:1px dashed var(--line);padding-top:10px;}
-  .sched summary{cursor:pointer;font-family:var(--label);font-size:12.5px;font-weight:700;letter-spacing:.05em;color:var(--sea);list-style:none;}
-  .sched summary::-webkit-details-marker{display:none;}
-  .sched summary::before{content:"▸ ";color:var(--accent);}
-  .sched[open] summary::before{content:"▾ ";}
-  .sched ol{list-style:none;margin:11px 0 2px;padding:0;display:grid;gap:9px;}
-  .sched li{font-size:13.5px;color:var(--text);line-height:1.5;}
-  .sched li .tm{font-family:var(--label);font-weight:700;color:var(--sea);margin-right:6px;}
-  .sched li a{font-weight:600;white-space:nowrap;}
-  .sched li .x{color:var(--muted);}
 
   footer{padding:46px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;}
   footer .pill{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:14px;font-family:var(--label);letter-spacing:.06em;}
@@ -249,15 +247,12 @@
         </div>
         <div class="card">
           <span class="tag set">已定</span>
-          <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>利木津巴士約 30 分 → 岡山站 → 後樂飯店</small></div></div>
-          <div class="leg"><div class="when">傍晚</div><div class="what"><b>西川綠道公園散步</b><small>飯店旁，舒展一下</small></div></div>
-          <div class="leg"><div class="when">晚上</div><div class="what"><b>接風晚餐 ＋ 烏城夜景</b><small>散步看岡山城「烏城」夜間點燈，外觀免費</small></div></div>
-          <details class="sched">
-            <summary>交通班次（點開查時刻）</summary>
-            <ol>
-              <li><span class="tm">17:25*</span>機場 → 利木津巴士（約30分）→ 岡山站　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a><br><span class="x">*配合班機的最近班次，現場確認</span></li>
-            </ol>
-          </details>
+          <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>入境、提行李約 30-40 分</small></div></div>
+          <div class="leg t"><div class="when">17:25*</div><div class="what">🚌 <span class="rt">機場 → 利木津巴士（約30分）→ 岡山站西口</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>機場巴士配合班機、班次不多</b>，*請依實際出關時間確認最近一班，別錯過。</div></div>
+          <div class="leg"><div class="when">17:55</div><div class="what"><b>抵岡山站 → 步行 5 分 → 後樂飯店 check-in</b></div></div>
+          <div class="leg"><div class="when">18:30</div><div class="what"><b>站前接風晚餐</b></div></div>
+          <div class="leg"><div class="when">19:30</div><div class="what"><b>西川綠道散步 ＋ 烏城夜景</b><small>岡山城夜間點燈、外觀免費（亮到 24:00）。累可改天看，每晚都點燈</small></div></div>
         </div>
       </article>
 
@@ -280,18 +275,18 @@
         </div>
         <div class="card">
           <span class="tag set">已定</span>
-          <div class="leg"><div class="when">上午</div><div class="what"><b>倉敷美觀地區 ＋ 大原美術館</b><small>白牆運河老街。趁 9 點前到，人少像包場</small></div></div>
-          <div class="leg"><div class="when">下午</div><div class="what"><b>吉備路田園</b><small>備中國分寺五重塔（立在稻田中的招牌風景）／吉備津神社（國寶）</small></div></div>
-          <details class="sched">
-            <summary>交通班次（點開查時刻）</summary>
-            <ol>
-              <li><span class="tm">08:05</span>岡山 → 山陽本線（約16分）→ 倉敷　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">12:40</span>倉敷 → 伯備線（約12分）→ 總社　<a href="https://transit.yahoo.co.jp/search/result/倉敷-総社" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">13:00</span>總社 → 計程車（約10分）→ 備中國分寺　<span class="x">單程約¥1,200-1,500／4人均分</span></li>
-              <li><span class="tm">14:20</span>總社 → 桃太郎線（約10分）→ 吉備津　<a href="https://transit.yahoo.co.jp/search/result/総社-吉備津" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">15:35</span>吉備津 → 桃太郎線（約13分）→ 岡山　<a href="https://transit.yahoo.co.jp/search/result/吉備津-岡山" target="_blank" rel="noopener">查班次↗</a></li>
-            </ol>
-          </details>
+          <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發</b></div></div>
+          <div class="leg t"><div class="when">08:05</div><div class="what">🚃 <span class="rt">岡山 → 倉敷〔山陽本線 16分〕08:21</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">08:40</div><div class="what"><b>倉敷美觀地區</b><small>9 點前空景散策：運河、町家、阿智神社</small></div></div>
+          <div class="leg"><div class="when">09:00</div><div class="what"><b>大原美術館</b><small>開館入場，約到 10:15</small></div></div>
+          <div class="leg"><div class="when">10:15</div><div class="what"><b>美觀續逛、咖啡 → 倉敷午餐</b><small>約到 12:30</small></div></div>
+          <div class="leg t"><div class="when">12:40</div><div class="what">🚃 <span class="rt">倉敷 → 總社〔伯備線 12分,¥240〕12:52</span>　<a href="https://transit.yahoo.co.jp/search/result/倉敷-総社" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">13:00</div><div class="what">🚕 <span class="rt">總社 → 計程車 10分 → 備中國分寺</span>　<span class="rt">單程約 ¥1,200-1,500／4人均分</span></div></div>
+          <div class="leg"><div class="when">13:10</div><div class="what"><b>備中國分寺</b><small>稻田中的五重塔、田園散策，約到 14:00</small></div></div>
+          <div class="leg t"><div class="when">14:20</div><div class="what">🚃 <span class="rt">總社 → 吉備津〔桃太郎線 10分〕14:30</span>　<a href="https://transit.yahoo.co.jp/search/result/総社-吉備津" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">14:35</div><div class="what"><b>吉備津神社</b><small>國寶本殿、長迴廊，約到 15:30</small></div></div>
+          <div class="leg t"><div class="when">15:35</div><div class="what">🚃 <span class="rt">吉備津 → 岡山〔桃太郎線 13分〕15:50</span>　<a href="https://transit.yahoo.co.jp/search/result/吉備津-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <p class="note">嫌滿可砍吉備津神社、14:20 直接回岡山。大原美術館週一休（這天週二 OK）。</p>
         </div>
       </article>
 
@@ -315,20 +310,17 @@
         </div>
         <div class="card">
           <span class="tag set">已定 · 滿檔日</span>
-          <div class="leg"><div class="when">上午</div><div class="what"><b>鷲羽山展望台「看橋」</b><small>眺望瀨戶大橋橫跨島嶼、遠及四國</small></div></div>
-          <div class="leg"><div class="when">中午</div><div class="what"><b>Marine Liner 跨海「坐橋」</b><small>搭電車直接開過瀨戶大橋到高松</small></div></div>
-          <div class="leg"><div class="when">下午</div><div class="what"><b>高松 · 栗林公園</b><small>媲美名園的大庭園，平坦悠閒</small></div></div>
-          <p class="note">移動較多的一天，但景點本身不累（看風景＋平坦庭園），主要是搭車。</p>
-          <details class="sched">
-            <summary>交通班次（點開查時刻）</summary>
-            <ol>
-              <li><span class="tm">08:00</span>岡山 → マリンライナー（約24分）→ 兒島　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">08:30</span>兒島 → 下電「とこはい號」巴士 → 鷲羽山　<a href="https://shimoden.net/rosen/rosen/timetable/tokohai.html" target="_blank" rel="noopener">時刻表↗</a><br><span class="x">每小時一班：兒島 :30 發／展望台 :59 回</span></li>
-              <li><span class="tm">10:30</span>兒島 → マリンライナー 跨瀨戶大橋（約24分）→ 高松　<a href="https://transit.yahoo.co.jp/search/result/児島-高松" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">11:10</span>高松築港 → 琴電（8分）→ 栗林公園　<a href="https://transit.yahoo.co.jp/search/result/高松築港-栗林公園" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">14:25</span>高松 → マリンライナー（約55分）→ 岡山　<a href="https://transit.yahoo.co.jp/search/result/高松-岡山" target="_blank" rel="noopener">查班次↗</a></li>
-            </ol>
-          </details>
+          <div class="leg"><div class="when">07:45</div><div class="what"><b>飯店出發</b></div></div>
+          <div class="leg t"><div class="when">08:00</div><div class="what">🚃 <span class="rt">岡山 → 兒島〔マリンライナー 24分〕08:24</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">08:30</div><div class="what">🚌 <span class="rt">兒島 → とこはい號巴士 → 鷲羽山第二展望台 08:59</span>　<a href="https://shimoden.net/rosen/rosen/timetable/tokohai.html" target="_blank" rel="noopener">時刻表↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>鷲羽山巴士「とこはい號」每小時只有一班</b>（兒島 :30 發、展望台 :59 回），錯過要等一小時。是全日最關鍵的銜接，務必抓準。想晚起就整天 +1 小時（首班兒島 8:30、次班 9:30）。</div></div>
+          <div class="leg"><div class="when">08:59</div><div class="what"><b>鷲羽山觀瀨戶大橋</b><small>眺望大橋橫跨島嶼、遠及四國（晨間人少）；09:59 巴士回兒島</small></div></div>
+          <div class="leg t"><div class="when">10:30</div><div class="what">🚃 <span class="rt">兒島 → 高松〔マリンライナー <b>跨瀨戶大橋</b> 24分〕10:54</span>　<a href="https://transit.yahoo.co.jp/search/result/児島-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">11:10</div><div class="what">🚃 <span class="rt">高松築港 → 栗林公園〔琴電 8分,¥180〕</span>　<a href="https://transit.yahoo.co.jp/search/result/高松築港-栗林公園" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">11:30</div><div class="what"><b>栗林公園</b><small>特別名勝大庭園，平坦悠閒，約到 13:00</small></div></div>
+          <div class="leg"><div class="when">13:00</div><div class="what"><b>高松午餐：讚岐烏龍麵</b><small>約到 14:10</small></div></div>
+          <div class="leg t"><div class="when">14:25</div><div class="what">🚃 <span class="rt">高松 → 岡山〔マリンライナー 55分,¥1,660〕15:20</span>　<a href="https://transit.yahoo.co.jp/search/result/高松-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <p class="note">移動較多的一天，但景點本身不累（看風景＋平坦庭園），主要是搭車。栗林公園 10 月開園 6:00-17:30。</p>
         </div>
       </article>
 
@@ -339,16 +331,14 @@
         </div>
         <div class="card">
           <span class="tag set">已定</span>
-          <div class="leg"><div class="when">上午</div><div class="what"><b>姬路城（一開門就進）</b><small>國寶・世界遺產白鷺城。趕在團客前最順</small></div></div>
-          <div class="leg"><div class="when">順遊</div><div class="what"><b>好古園</b><small>城旁的日式庭園</small></div></div>
-          <p class="note">天守閣內樓梯較陡，想省力可只逛外觀與庭園。</p>
-          <details class="sched">
-            <summary>交通班次（點開查時刻）</summary>
-            <ol>
-              <li><span class="tm">08:00</span>岡山 → 山陽新幹線 自由席（約20-30分）→ 姬路　<a href="https://transit.yahoo.co.jp/search/result/岡山-姫路" target="_blank" rel="noopener">查班次↗</a></li>
-              <li><span class="tm">13:30</span>姬路 → 山陽新幹線 → 岡山　<a href="https://transit.yahoo.co.jp/search/result/姫路-岡山" target="_blank" rel="noopener">查班次↗</a></li>
-            </ol>
-          </details>
+          <div class="leg"><div class="when">07:40</div><div class="what"><b>飯店出發</b></div></div>
+          <div class="leg t"><div class="when">08:00</div><div class="what">🚄 <span class="rt">岡山 → 姬路〔山陽新幹線 自由席 約20-30分,¥3,280〕08:25</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-姫路" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">08:30</div><div class="what"><b>姬路站 → 步行大手前通約 15-20 分 → 姬路城</b></div></div>
+          <div class="leg"><div class="when">09:00</div><div class="what"><b>姬路城（開門即進）</b><small>國寶・世界遺產白鷺城。天守、本丸約 1.5-2hr</small></div></div>
+          <div class="leg"><div class="when">11:00</div><div class="what"><b>好古園</b><small>城旁日式庭園，約到 12:00</small></div></div>
+          <div class="leg"><div class="when">12:00</div><div class="what"><b>姬路午餐</b><small>姬路關東煮、站前，約到 13:00</small></div></div>
+          <div class="leg t"><div class="when">13:30</div><div class="what">🚄 <span class="rt">姬路 → 岡山〔山陽新幹線〕約 14:00</span>　<a href="https://transit.yahoo.co.jp/search/result/姫路-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <p class="note">天守閣內樓梯較陡，想省力可只逛外觀與庭園。10 月可能有校外教學，9 點進場最保險。下午回岡山自由活動。</p>
         </div>
       </article>
 
@@ -359,15 +349,13 @@
         </div>
         <div class="card">
           <span class="tag set">已定</span>
-          <div class="leg"><div class="when">上午</div><div class="what"><b>後樂園</b><small>日本三名園之一，離飯店最近。行李寄放飯店，玩完再拿</small></div></div>
-          <div class="leg"><div class="when">13:00</div><div class="what"><b>機場巴士 → 岡山機場</b><small>15:55 起飛</small></div></div>
-          <details class="sched">
-            <summary>交通班次（點開查時刻）</summary>
-            <ol>
-              <li><span class="tm">08:00</span>飯店 → 後樂園（步行約20分／路面電車「城下」／計程車5分）</li>
-              <li><span class="tm">13:00</span>岡山站西口 → 利木津巴士（約30分）→ 機場　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></li>
-            </ol>
-          </details>
+          <div class="leg"><div class="when">07:00</div><div class="what"><b>早餐 → 07:40 退房、行李寄放飯店櫃台</b></div></div>
+          <div class="leg t"><div class="when">07:50</div><div class="what">🚶 <span class="rt">飯店 → 後樂園（步行約20分／路面電車「城下」／計程車5分）</span></div></div>
+          <div class="leg"><div class="when">08:00</div><div class="what"><b>後樂園</b><small>日本三名園之一、離飯店最近。開園 8:00、清晨安靜，約到 09:50</small></div></div>
+          <div class="leg"><div class="when">10:15</div><div class="what"><b>站前輕食、最後採買</b><small>百貨約 10:00 開；11:45 取行李</small></div></div>
+          <div class="leg t"><div class="when">13:00</div><div class="what">🚌 <span class="rt">岡山站西口 → 利木津巴士（約30分）→ 機場 13:30</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>回程班機 15:55，機場巴士班次有限</b>，請預留緩衝、提前確認 13:00 前後的班次別錯過。</div></div>
+          <div class="leg"><div class="when">15:55</div><div class="what"><b>岡山機場起飛</b></div></div>
         </div>
       </article>
 

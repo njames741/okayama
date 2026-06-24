@@ -141,6 +141,19 @@
   .warn{display:flex;gap:9px;align-items:flex-start;background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:10px;padding:10px 13px;margin:0 0 14px 0;font-size:13px;line-height:1.5;}
   .warn .ic{font-size:15px;flex:0 0 auto;}
   .warn b{color:#C2542F;}
+  /* collapsible detail attached to a leg (reminders / timetables / fallbacks) */
+  .fold{margin:-3px 0 13px 64px;border-left:2px solid var(--line);}
+  .fold>summary{cursor:pointer;list-style:none;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--sea);padding:5px 0 5px 12px;display:flex;align-items:center;gap:7px;}
+  .fold>summary::-webkit-details-marker{display:none;}
+  .fold>summary::before{content:"▸";color:var(--accent-2);font-size:11px;transition:transform .2s ease;}
+  .fold[open]>summary::before{transform:rotate(90deg);}
+  .fold>summary:hover{color:var(--accent);}
+  .fold-body{padding:1px 0 9px 13px;font-size:13px;line-height:1.62;color:var(--muted);}
+  .fold-body b{color:var(--text);font-weight:600;}
+  .fold-body a{color:var(--sea);font-weight:700;white-space:nowrap;}
+  .fold-body .row{margin:0 0 5px;}
+  .fold-body .tt{font-family:var(--label);font-size:12.5px;color:var(--text);background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:7px;padding:7px 10px;margin:4px 0 2px;letter-spacing:.02em;}
+  @media (max-width:560px){ .fold{margin-left:0;} }
   .tag{
     display:inline-block;font-family:var(--label);font-size:11px;font-weight:700;
     letter-spacing:.06em;padding:3px 9px;border-radius:999px;margin:0 0 16px;
@@ -244,7 +257,13 @@
     <div class="cand">
       <div class="reveal"><b>① 豊島美術館 線上票 ★ 最優先</b><small>8/14（五）10:00 JST／台灣 09:00 開賣。線上每人 ¥1,800（現場 ¥2,000），4 人都要票，預約 09:50–10:00 入場時段配合 Day4 動線。平日非旺季<b>不必秒殺，但別拖到最後一週</b>（早上時段較快滿）。票可來館前取消退款，<b>改期＝取消重訂</b>，所以仍保有看天氣換天的彈性。<a href="https://www.e-tix.jp/teshima/" target="_blank" rel="noopener">官方預約↗</a></small></div>
       <div class="reveal"><b>② 豊島電動輔助自行車</b><small>約 ¥1,000/日 × 4 台，家浦港下船正對面多家。旺日會借光：行前先確認能否預約；不能的話，當天搭 08:40 第一班船到就立刻去租。</small></div>
-      <div class="reveal"><b>③ 交通票券（規劃中）</b><small>JR 區域券 vs 單程逐段買，哪個划算（姬路新幹線、高松マリンライナー是大宗）——我算好再補上建議，先別買。</small></div>
+      <div class="reveal"><b>③ 交通票券：算過了，不買 pass 最省 ✅</b><small>全程 JR 逐段單買約 <b>¥14,060／人</b>，比任何訪日外國人 JR Pass 都便宜——因為<b>沒有任何一張 5 日 pass 同時涵蓋姬路（東）＋高松（南）兩個反方向</b>，最便宜的相關 pass 也要 ¥17,000、且只含單向。<b>做法：在來線刷 IC 卡（ICOCA／Suica 皆可），姬路那天的新幹線自由席當天現買。</b>不必為票券重排行程（現行 Day2–6 連續用 JR 本來就最省）。</small>
+        <details class="fold" style="margin-left:0;margin-top:9px;"><summary>逐段花費與 pass 比較（細算）</summary><div class="fold-body">
+          <div class="tt">逐段單買來回（每人）：Day2 児島 ¥1,020｜Day3 倉敷+総社+桃太郎線 ¥1,980｜Day4 宇野 ¥1,180｜Day5 高松 ¥3,320｜Day6 姬路新幹線 ¥6,560　→ <b>JR 合計 ¥14,060</b></div>
+          <div class="row">姬路新幹線一段就佔 ¥6,560；其餘 Day2–5 在岡山近郊只 ¥7,500。</div>
+          <div class="row">相關 pass：關西廣島（¥17,000，含姬路、<b>不含高松</b>）｜岡山廣島山口（¥17,000，含高松、<b>不含姬路</b>）｜山陽山陰（¥23,000，兩邊都含但更貴）。買任一張都要再補另一方向，總額都超過 ¥14,060。除非加碼去廣島／宮島，pass 才會回本。</div>
+          <div class="row">非 JR（pass 一律不含、照付）：宇野⇄豊島渡輪 ¥780/趟、琴電 ¥210。</div>
+        </div></details></div>
       <div class="reveal"><b>④ 兒島競艇賽程（影響 Day2）</b><small>現場賽只有「兒島本場比賽日」才有，<b>2026/9-10 賽程約 7-8 月公布</b>。屆時對 9/27-10/3 哪天有開催 → 把 Day2 對到那天；並看是日賽（照排上午鷲羽山／下午競艇）還是夜賽（改下午～傍晚看賽）。若整段都無開催，就只剩場外券、看不到現場賽，需改 Day2 內容。<a href="https://www.kojimaboat.jp/01cal/cal.htm" target="_blank" rel="noopener">賽程表↗</a></small></div>
       <div class="reveal"><b>⑤ 餐廳（規劃中）</b><small>每日午晚餐（含不吃海鮮、但熟魚可以的那位）——之後再補。</small></div>
     </div>
@@ -266,8 +285,13 @@
         <div class="card">
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>入境、提行李約 30-40 分</small></div></div>
-          <div class="leg t"><div class="when">17:25*</div><div class="what">🚌 <span class="rt">機場 → 利木津巴士（約30分）→ 岡山站西口</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
-          <div class="warn"><span class="ic">⚠️</span><div><b>機場巴士配合班機、班次不多</b>，*請依實際出關時間確認最近一班，別錯過。</div></div>
+          <div class="leg t"><div class="when">17:25*</div><div class="what">🚌 <span class="rt">機場 → 利木津巴士（約30分,¥1,000）→ 岡山站西口</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>機場巴士配合班機、班次不多</b>，*一出關就確認最近一班（白天定期班較疏）。萬一沒接到，計程車是穩當備援 ↓</div></div>
+          <details class="fold"><summary>萬一沒接到巴士？備援與叫車</summary><div class="fold-body">
+            <div class="row">利木津巴士配合班機，<b>國際線到著通常會加開臨時便</b>往岡山站；但定期班白天較疏（現行表 16:55 後直接跳到 18:55）。所以一出關先看有沒有臨時便或最近一班。</div>
+            <div class="row"><b>備援＝計程車</b>：機場是熱點，排班與叫車App都好叫，到岡山站約 30 分、約 ¥3,500（4人均分每人約 ¥900，和巴士差不多）。</div>
+            <div class="row"><b>叫車App：裝 GO 或 DiDi</b>（岡山市區兩者都好用）。</div>
+          </div></details>
           <div class="leg"><div class="when">17:55</div><div class="what"><b>抵岡山站 → 步行 5 分 → 後樂飯店 check-in</b></div></div>
           <div class="leg"><div class="when">18:30</div><div class="what"><b>站前接風晚餐</b></div></div>
           <div class="leg"><div class="when">19:30</div><div class="what"><b>西川綠道散步 ＋ 烏城夜景</b><small>岡山城夜間點燈、外觀免費（亮到 24:00）。累可改天看，每晚都點燈</small></div></div>
@@ -282,11 +306,20 @@
         <div class="card">
           <span class="tag set">已定 · 待對賽程</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
-          <div class="leg t"><div class="when">08:00</div><div class="what">🚃 <span class="rt">岡山 → 兒島〔マリンライナー 24分〕08:24</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">08:00</div><div class="what">🚃 <span class="rt">岡山 → 兒島〔マリンライナー 24分,¥510〕08:24</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg t"><div class="when">08:30</div><div class="what">🚌 <span class="rt">兒島 → とこはい號巴士 → 鷲羽山第二展望台 08:59</span>　<a href="https://shimoden.net/rosen/rosen/timetable/tokohai.html" target="_blank" rel="noopener">時刻表↗</a></div></div>
-          <div class="warn"><span class="ic">⚠️</span><div><b>鷲羽山巴士「とこはい號」每小時只有一班</b>（兒島 :30 發、展望台 :59 回），錯過要等一小時，是全日最關鍵的銜接。想晚起就整天 +1 小時（次班兒島 9:30）。</div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>鷲羽山巴士「とこはい號」每小時只有一班</b>（兒島駅 :30 發），錯過要等一小時，是全日最關鍵的銜接。末班兒島駅 <b>17:30</b> 發，傍晚務必趕上。想晚起就整天 +1 小時（次班兒島 9:30）。</div></div>
+          <details class="fold"><summary>とこはい號 班次表（一天9班、單向循環）</summary><div class="fold-body">
+            <div class="row">下電巴士循環線，一天 9 班、每小時 1 班；繞一圈約 50 分。它是<b>單向循環</b>——去回搭同一條線，到展望台後續繞回兒島駅。</div>
+            <div class="tt">兒島駅發：8:30・9:30・10:30 … 16:30・<b>17:30（末班）</b>　｜　到鷲羽山第二展望台：發車約 29 分後（8:59、9:59、10:59…）</div>
+            <div class="row">我們的走法：8:30 發 → 8:59 到展望台，看到 10:59（搭 10:30 那班循環車經過展望台）→ 約 11:20 回兒島駅。中途想早走，9:59 也有一班可搭回。</div>
+          </div></details>
           <div class="leg"><div class="when">08:59</div><div class="what"><b>鷲羽山觀瀨戶大橋（2hr）</b><small>第二展望台看大橋全景＋走鷲羽山山頂步道（緩坡 15-20 分，俯瞰大橋與島群、晴天遠及四國，沿途可歇）。晨間人少、光線好；10:59 巴士回兒島</small></div></div>
-          <div class="leg t"><div class="when">11:30</div><div class="what">🚌 <span class="rt">兒島站 → 競艇場免費接駁巴士（約3分）→ ボートレース児島</span></div></div>
+          <div class="leg t"><div class="when">11:30</div><div class="what">🚌 <span class="rt">兒島站 →〔競艇場免費接駁巴士 約5分〕→ ボートレース児島</span></div></div>
+          <details class="fold"><summary>接駁巴士只有開催日有 · 班次與備援</summary><div class="fold-body">
+            <div class="row"><b>免費接駁巴士只在「開催日（有比賽的日子）」運行</b>，非開催日完全沒車。往競艇場約 9:30–14:00 隨時發（密時段 20–30 分一班），回兒島駅約 14:55 起、滿車即發、末班為末場結束後幾分。</div>
+            <div class="row"><b>沒接駁也不怕</b>：兒島駅 → 競艇場正門走路約 <b>16 分（1.3km、平路）</b>，或計程車約 5 分、<b>~¥1,000</b>（4人均分）。所以就算那天沒開催，這段照樣到得了。</div>
+          </div></details>
           <div class="leg"><div class="when">11:45</div><div class="what"><b>場內午餐</b><small>競艇場食堂便宜有名，或兒島站周邊</small></div></div>
           <div class="leg"><div class="when">12:30</div><div class="what"><b>ボートレース児島（競艇，半天）</b><small>看下午約 5-6 場現場賽，後段多為精采場次。入場 ¥100，約到 16:00</small></div></div>
           <div class="leg t"><div class="when">16:1x</div><div class="what">🚃 <span class="rt">兒島 → 岡山〔マリンライナー 24分〕~16:40</span>　<a href="https://transit.yahoo.co.jp/search/result/児島-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -303,16 +336,27 @@
         <div class="card">
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發</b></div></div>
-          <div class="leg t"><div class="when">08:05</div><div class="what">🚃 <span class="rt">岡山 → 倉敷〔山陽本線 16分〕08:21</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">08:05</div><div class="what">🚃 <span class="rt">岡山 → 倉敷〔山陽本線 16分,¥330〕08:21</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg"><div class="when">08:40</div><div class="what"><b>倉敷美觀地區．空景散策</b><small>趁人少：柳川運河、町家、阿智神社，約到 09:40</small></div></div>
           <div class="leg"><div class="when">09:40</div><div class="what"><b>悠閒早午餐＋咖啡：元町珈琲 倉敷の離れ</b><small>沙發席、可久坐不趕人，7:00–22:00；倉敷站南口步行 7 分。接近中午慢慢待，12:25 再步行到站</small></div></div>
-          <div class="leg t"><div class="when">12:40</div><div class="what">🚃 <span class="rt">倉敷 → 總社〔伯備線 12分,¥240〕12:52</span>　<a href="https://transit.yahoo.co.jp/search/result/倉敷-総社" target="_blank" rel="noopener">查班次↗</a></div></div>
-          <div class="leg t"><div class="when">13:00</div><div class="what">🚕 <span class="rt">總社 → 計程車 10分 → 備中國分寺</span>　<span class="rt">單程約 ¥1,200-1,500／4人均分</span></div></div>
-          <div class="leg"><div class="when">13:10</div><div class="what"><b>備中國分寺</b><small>稻田中的五重塔、田園散策，約到 14:00</small></div></div>
-          <div class="leg t"><div class="when">14:20</div><div class="what">🚃 <span class="rt">總社 → 吉備津〔桃太郎線 10分〕14:30</span>　<a href="https://transit.yahoo.co.jp/search/result/総社-吉備津" target="_blank" rel="noopener">查班次↗</a></div></div>
-          <div class="leg"><div class="when">14:35</div><div class="what"><b>吉備津神社</b><small>國寶本殿、長迴廊，約到 15:30</small></div></div>
-          <div class="leg t"><div class="when">15:35</div><div class="what">🚃 <span class="rt">吉備津 → 岡山〔桃太郎線 13分〕15:50</span>　<a href="https://transit.yahoo.co.jp/search/result/吉備津-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
-          <p class="note">嫌滿可砍吉備津神社、14:20 直接回岡山。上午很鬆，想晚起可整體延後一班車。</p>
+          <div class="leg t"><div class="when">12:38</div><div class="what">🚃 <span class="rt">倉敷 → 總社〔伯備線 11分,¥240〕12:49</span>　<a href="https://transit.yahoo.co.jp/search/result/倉敷-総社" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">12:55</div><div class="what">🚕 <span class="rt">總社駅 → 計程車約10分 → 備中國分寺（單程約 ¥1,200-1,500／4人均分）</span></div></div>
+          <details class="fold"><summary>總社的計程車這樣叫最保險（會被放生在田裡）</summary><div class="fold-body">
+            <div class="row">備中國分寺在田園中、現場攔不到車，<b>千萬別到了才想叫車</b>。最穩做法：<b>請司機在現場等候（約30-40分），原車載你回總社駅</b>——談好等候時間，等候會另計但4人均分不貴。</div>
+            <div class="row"><b>叫車App：總社市只有 DiDi 涵蓋</b>（GO／Uber 不含總社），但鄉下景點端常顯示「附近無車」，仍以電話叫車為主。先存地方車行：<b>備北タクシー 0866-92-0185</b>。總社駅前有排班計程車，白天通常站著就有車。</div>
+            <div class="row">出發前一週，可在 DiDi 實際輸入「総社駅／備中国分寺」測一次叫不叫得到車。</div>
+          </div></details>
+          <div class="leg"><div class="when">13:05</div><div class="what"><b>備中國分寺（約35-40分）</b><small>稻田中的五重塔、田園散策、拍照。司機等候 → 13:45 原車回總社駅</small></div></div>
+          <div class="leg t"><div class="when">13:54</div><div class="what">🚃 <span class="rt">總社 → 吉備津〔桃太郎線 約23分〕14:17</span>　<a href="https://transit.yahoo.co.jp/search/result/総社-吉備津" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>桃太郎線（吉備線）班次稀疏、下午會破班</b>：往岡山方向<b>14 時台整點到 54 分之間「沒有車」，14:00–14:54 是空檔</b>，全程最該卡時刻的一段。對準總社發 <b>:54 / :24</b>（13 時台是 13:00 / 13:54）。</div></div>
+          <div class="leg"><div class="when">14:17</div><div class="what"><b>吉備津神社（約1hr）</b><small>國寶本殿、長迴廊、御釜殿，平緩好走</small></div></div>
+          <div class="leg t"><div class="when">15:21</div><div class="what">🚃 <span class="rt">吉備津 → 岡山〔桃太郎線 約14分〕15:35</span>　<a href="https://transit.yahoo.co.jp/search/result/吉備津-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <details class="fold"><summary>想在備中國分寺／田園多待？改走 14:54 這版</summary><div class="fold-body">
+            <div class="row">現排是「總社 13:54 發 → 吉備津 14:17，神社待約 1hr → 吉備津 15:21 → 岡山 15:35」，回程早、最順。</div>
+            <div class="row">想在備中國分寺悠閒久一點 → 改搭 <b>總社 14:54 發</b>（桃太郎線 14 時台唯一一班），吉備津 15:17 到，神社待約 1hr → <b>吉備津 16:21 → 岡山 16:36</b>，整體晚約 1 小時。</div>
+            <div class="tt">總社發往岡山（經吉備津）：13:00・13:54・<b>14:54</b>・15:24・15:54・16:24・16:54　｜　吉備津發往岡山：13:25・14:21・15:21・15:51・16:21・16:51</div>
+          </div></details>
+          <p class="note">嫌滿可砍吉備津神社、看完五重塔直接回岡山。上午很鬆，想晚起可整體延後一班車（但下午要避開桃太郎線 14 時台空檔）。</p>
         </div>
       </article>
 
@@ -323,10 +367,16 @@
         </div>
         <div class="card">
           <span class="tag set">已定</span>
-          <div class="leg"><div class="when">07:15</div><div class="what"><b>飯店出發 → 岡山站</b></div></div>
-          <div class="leg t"><div class="when">07:38*</div><div class="what">🚃 <span class="rt">岡山 → 宇野〔宇野みなと線 約52分,¥590；部分需茶屋町轉乘〕~08:30</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-宇野" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">07:05</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
+          <div class="leg t"><div class="when">07:32</div><div class="what">🚃 <span class="rt">岡山 →〔瀨戶大橋線 約15分〕茶屋町 07:47 ‧ <b>同站轉乘</b> 08:01 →〔宇野みなと線〕→ 宇野 08:25（¥590）</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-宇野" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">08:30</div><div class="what">🚶 <span class="rt">宇野駅 → 步行3分 → 宇野港（接 08:40 船約 15 分緩衝）</span></div></div>
           <div class="leg t"><div class="when">08:40</div><div class="what">⛴️ <span class="rt">宇野港 → 家浦港（豊島）〔小豆島豊島フェリー「みらい」約25分,¥780〕09:05</span>　<a href="https://www.shodoshima-ferry.co.jp/timetable/" target="_blank" rel="noopener">時刻表↗</a></div></div>
-          <div class="warn"><span class="ic">⚠️</span><div><b>上午往豊島的好船只有 08:40 這一班</b>，下一班要等到 11:10／12:00。錯過＝整個上午報銷，<b>07:38 那班車務必抓緊、多留緩衝</b>。</div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>上午往豊島的好船只有 08:40 這一班</b>，下一班要等到 11:10／12:00，錯過＝整個上午報銷。已選「<b>07:32 岡山発 → 茶屋町轉乘 → 08:25 宇野</b>」這條：接船有 15 分緩衝，比硬搭直通車穩。其他選法見折疊 ↓</div></div>
+          <details class="fold"><summary>往宇野的車很少 · 為何選 07:32 轉乘（含備案）</summary><div class="fold-body">
+            <div class="row">宇野線白天每小時才 1 班，早上往宇野實質只有這幾條，我們選最穩的：</div>
+            <div class="tt"><b>① 首選 07:32 岡山発</b>（児島行）→ 茶屋町同站轉乘 08:01 宇野行 → <b>08:25 宇野</b>，接船 15 分緩衝<br>② 直通 07:40 岡山発 → 08:32 宇野，只剩 <b>8 分</b>，列車稍誤點就趕不上，不建議賭<br>③ 最保險但早：06:15 岡山発直通 → 07:07 宇野，提早約 1.5hr，可在宇野港吃早餐、看 Triennale 裝置藝術</div>
+            <div class="row">出發前用 Yahoo!乗換以實際日期複查「茶屋町 08:01 宇野行」是否仍在即可。</div>
+          </div></details>
           <div class="leg"><div class="when">09:05</div><div class="what"><b>家浦港租電動輔助自行車</b><small>下船正對面就有多家，50 台以上、約 ¥1,000/日。旺日會借光 → 建議先預約</small></div></div>
           <div class="leg t"><div class="when">09:20</div><div class="what">🚲 <span class="rt">電動車 家浦港 → 唐櫃・豊島美術館（約 3.8km、中段陡上坡有助力，約 20-25 分）~09:45</span></div></div>
           <div class="leg"><div class="when">10:00</div><div class="what"><b>豊島美術館</b><small>水滴狀清水模空間，平躺聽水聲與光影——本趟招牌作，約到 11:15</small></div></div>
@@ -348,7 +398,7 @@
           <span class="tag set">已定 · 悠閒日</span>
           <div class="leg"><div class="when">08:00</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:10</div><div class="what">🚃 <span class="rt">岡山 → 高松〔マリンライナー <b>跨瀨戶大橋</b> 約53分,¥1,660〕09:05</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
-          <div class="leg t"><div class="when">09:20</div><div class="what">🚃 <span class="rt">高松築港 → 栗林公園〔琴電 8分,¥180〕→ 步行10分</span>　<a href="https://transit.yahoo.co.jp/search/result/高松築港-栗林公園" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">09:20</div><div class="what">🚃 <span class="rt">高松築港 → 栗林公園〔琴電 8分,¥210〕→ 步行10分</span>　<a href="https://transit.yahoo.co.jp/search/result/高松築港-栗林公園" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg"><div class="when">09:40</div><div class="what"><b>栗林公園（2hr 悠閒）</b><small>特別名勝大庭園：南湖和船、掬月亭抹茶、飛來峰眺望，平坦好走，約到 11:40</small></div></div>
           <div class="leg t"><div class="when">11:50</div><div class="what">🚃 <span class="rt">栗林公園 → 高松築港〔琴電 8分〕12:00</span></div></div>
           <div class="leg"><div class="when">12:10</div><div class="what"><b>高松午餐：讚岐烏龍麵</b><small>本場讚岐；不吃海鮮那位有釜玉／肉烏龍可選，約到 13:20</small></div></div>
@@ -387,8 +437,12 @@
           <div class="leg t"><div class="when">07:50</div><div class="what">🚶 <span class="rt">飯店 → 後樂園（步行約20分／路面電車「城下」／計程車5分）</span></div></div>
           <div class="leg"><div class="when">08:00</div><div class="what"><b>後樂園</b><small>日本三名園之一、離飯店最近。開園 8:00、清晨安靜，約到 09:50</small></div></div>
           <div class="leg"><div class="when">10:15</div><div class="what"><b>站前輕食、最後採買</b><small>百貨約 10:00 開；11:45 取行李</small></div></div>
-          <div class="leg t"><div class="when">13:00</div><div class="what">🚌 <span class="rt">岡山站西口 → 利木津巴士（約30分）→ 機場 13:30</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
-          <div class="warn"><span class="ic">⚠️</span><div><b>回程班機 15:55，機場巴士班次有限</b>，請預留緩衝、提前確認 13:00 前後的班次別錯過。</div></div>
+          <div class="leg t"><div class="when">12:55</div><div class="what">🚌 <span class="rt">岡山站西口 → 利木津巴士（約30分,¥1,000）→ 機場 ~13:25</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
+          <div class="warn"><span class="ic">⚠️</span><div><b>搭 12:55 岡山站西口發這班</b>（約 13:25 到機場、距 15:55 起飛約 2.5hr，充裕）。<b>下一班 14:50 太晚</b>（只剩 35 分），千萬別錯過 12:55；備援見折疊 ↓</div></div>
+          <details class="fold"><summary>萬一沒搭到 12:55 巴士？</summary><div class="fold-body">
+            <div class="row">利木津巴士白天班次疏，12:55 之後下一班 14:50（到機場 15:20，太趕）。沒搭到就<b>直接計程車</b>：岡山站 → 機場約 30 分、約 ¥3,500（4人均分）。機場線計程車好叫，App 用 GO／DiDi。</div>
+            <div class="row">現行表只到 6/30，9 月班表可能改版——出發前再查一次 12:55 前後的實際班次。</div>
+          </div></details>
           <div class="leg"><div class="when">15:55</div><div class="what"><b>岡山機場起飛</b></div></div>
         </div>
       </article>
@@ -403,7 +457,7 @@
     </div>
     <p class="lead" style="margin:-4px 0 16px;">七天已排滿。以下是<b>若想替換某天</b>的口袋備案——要去的話得換掉某個現有行程。</p>
     <div class="cand">
-      <div class="reveal"><b>鬼ノ城</b><small>古代山城遺跡，沿 2.8km 城壁環走，復元西門立於斷崖，俯瞰吉備平野、晴天遠及瀨戶內海與四國。桃太郎傳說（溫羅）的舞台。総社站轉計程車約 20 分。</small></div>
+      <div class="reveal"><b>鬼ノ城</b><small>古代山城遺跡，沿 2.8km 城壁環走，復元西門立於斷崖，俯瞰吉備平野、晴天遠及瀨戶內海與四國。桃太郎傳說（溫羅）的舞台。総社站轉計程車約 20 分（單程約 ¥2,000）。<b>山上無公共交通、叫車App叫不到</b>，要去的話建議在総社駅綠色窗口買「駅から観タクン」貸切計程車（含等候、不怕被放生），或去程就跟司機談好等候＋原車下山。</small></div>
       <div class="reveal"><b>井倉洞</b><small>全長 1,200m 的大型鐘乳洞，入口位於 240m 斷崖下，洞外有井倉峽溪谷。JR 伯備線井倉站步行 15 分，全年無休、洞內恆溫約 15 度。</small></div>
       <div class="reveal"><b>舊閑谷學校</b><small>國寶，現存世界最古的庶民公立學校，講堂為國寶。JR 吉永站轉巴士約 10 分。</small></div>
       <div class="reveal"><b>直島（藝術島）</b><small>草間彌生紅／黃南瓜、本村藝術老屋、地中美術館（安藤忠雄，須預約）。租電動車＋¥100 巴士。</small></div>
@@ -419,7 +473,8 @@
       <li><span class="ic">🌅</span><div><b>早起換空景</b><small>熱門點（倉敷、姬路城）都排在一開門、人潮湧入前抵達。</small></div></li>
       <li><span class="ic">🛍️</span><div><b>購物排在晚上</b><small>商店街、藥妝開到晚，晚餐後想逛的人可以自由行動。</small></div></li>
       <li><span class="ic">🍽️</span><div><b>用餐</b><small>有人不吃海鮮（熟魚可以），找餐廳會挑有熟魚或肉類的選擇。</small></div></li>
-      <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排，對長輩友善。</small></div></li>
+      <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排，對長輩友善。在來線刷 IC 卡（ICOCA／Suica）最方便，不必買 pass（已比過，逐段單買最省）。</small></div></li>
+      <li><span class="ic">🚕</span><div><b>叫車 App 裝 DiDi（市區再加 GO）</b><small>岡山市區 GO／DiDi 都好用；但只有 <b>DiDi 涵蓋總社市</b>（Day3 備中國分寺那帶），所以裝 DiDi 一個走全程。鄉下景點 App 常叫不到車，<b>去程就請司機等候、原車載回</b>最保險。</small></div></li>
     </ul>
   </section>
 

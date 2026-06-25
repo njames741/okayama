@@ -200,6 +200,42 @@
     .reveal.in{opacity:1;transform:none;}
   }
   :focus-visible{outline:2px solid var(--sea);outline-offset:3px;}
+
+  /* ---------- day banner photo ---------- */
+  .daypic{
+    position:relative;margin:-18px -18px 16px;
+    height:clamp(150px,30vw,228px);
+    border-radius:13px 13px 0 0;overflow:hidden;background:var(--line);
+  }
+  .daypic img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.97);}
+  .daypic::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(36,48,46,.06) 0%,rgba(36,48,46,0) 30%,rgba(36,48,46,0) 56%,rgba(36,48,46,.46) 100%);
+  }
+  .daypic figcaption{
+    position:absolute;left:14px;bottom:11px;z-index:2;
+    font-family:var(--label);font-size:12px;font-weight:600;letter-spacing:.06em;
+    color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.55);
+  }
+
+  /* ---------- polish: gentle card lift + overview hover ---------- */
+  .card{transition:box-shadow .25s ease,transform .25s ease;}
+  @media (hover:hover){
+    .day:hover .card{box-shadow:0 8px 26px -16px rgba(36,48,46,.4);}
+  }
+  .ov .ovlink{border-radius:10px;margin:0 -10px;padding-left:10px;padding-right:10px;transition:background .15s ease;}
+  @media (hover:hover){ .ov .ovlink:hover{background:rgba(255,255,255,.5);} }
+
+  /* ---------- footer photo credits ---------- */
+  footer .credits{max-width:560px;margin:24px auto 0;text-align:left;}
+  footer .credits>summary{cursor:pointer;list-style:none;text-align:center;font-family:var(--label);font-size:12px;letter-spacing:.06em;color:var(--sea);font-weight:700;display:inline-flex;gap:6px;align-items:center;}
+  footer .credits>summary::-webkit-details-marker{display:none;}
+  footer .credits>summary::before{content:"▸";color:var(--accent-2);font-size:10px;transition:transform .2s ease;}
+  footer .credits[open]>summary::before{transform:rotate(90deg);}
+  footer .credits ul{list-style:none;padding:0;margin:12px 0 0;font-size:11.5px;line-height:1.7;color:var(--muted);}
+  footer .credits li{padding:5px 0;border-top:1px solid var(--line);}
+  footer .credits li b{color:var(--text);font-weight:600;}
+  footer .credits a{color:var(--sea);}
 </style>
 </head>
 <body>
@@ -253,6 +289,7 @@
           <div class="day-title"><div class="dt">9 / 27　星期日</div><h3>抵達 · 岡山夜色</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day1-okayama-castle.jpg" alt="岡山城（烏城）黑色天守" loading="lazy" decoding="async"><figcaption>岡山城 · 烏城</figcaption></figure>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>入境、提行李約 30-40 分</small></div></div>
           <div class="leg t"><div class="when">17:25*</div><div class="what">🚌 <span class="rt">機場 → 利木津巴士（リムジンバス・機場巴士，約30分,¥1,000）→ 岡山站西口</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
@@ -285,6 +322,7 @@
           <div class="day-title"><div class="dt">9 / 28　星期一</div><h3>児島半島日</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day2-seto-ohashi.jpg" alt="瀨戶大橋跨越瀨戶內海連結本州與四國的空拍" loading="lazy" decoding="async"><figcaption>瀨戶大橋 · 跨海連島</figcaption></figure>
           <span class="tag set">已定 · 待對賽程</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
           <div class="leg t"><div class="when">08:00</div><div class="what">🚃 <span class="rt">岡山 → 兒島〔マリンライナー（Marine Liner 瀨戶大橋快速）24分,¥510〕08:24</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -326,6 +364,7 @@
           <div class="day-title"><div class="dt">9 / 29　星期二</div><h3>倉敷 × 吉備路</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day3-kurashiki-bikan.jpg" alt="倉敷美觀地區柳川運河與白牆町家、垂柳" loading="lazy" decoding="async"><figcaption>倉敷美觀地區 · 柳川運河</figcaption></figure>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:05</div><div class="what">🚃 <span class="rt">岡山 → 倉敷〔山陽本線 16分,¥330〕08:21</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -377,6 +416,7 @@
           <div class="day-title"><div class="dt">9 / 30　星期三</div><h3>豊島 · 藝術跳島</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day4-teshima-terraces.jpg" alt="豊島唐櫃的梯田與瀨戶內海，豊島美術館即坐落於此" loading="lazy" decoding="async"><figcaption>豊島唐櫃 · 梯田與海</figcaption></figure>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:05</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
           <div class="leg t"><div class="when">07:32</div><div class="what">🚃 <span class="rt">岡山 →〔瀨戶大橋線 約15分〕茶屋町 07:47 ‧ <b>同站轉乘</b> 08:01 →〔宇野みなと線（宇野港線）〕→ 宇野 08:25（¥590）</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-宇野" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -428,6 +468,7 @@
           <div class="day-title"><div class="dt">10 / 1　星期四</div><h3>跨瀨戶大橋 × 高松</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day5-ritsurin.jpg" alt="栗林公園南湖上的偃月橋與庭園" loading="lazy" decoding="async"><figcaption>栗林公園 · 偃月橋</figcaption></figure>
           <span class="tag set">已定 · 悠閒日</span>
           <div class="leg"><div class="when">08:00</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:10</div><div class="what">🚃 <span class="rt">岡山 → 高松〔マリンライナー（Marine Liner 瀨戶大橋快速） <b>跨瀨戶大橋</b> 約53分,¥1,660〕09:05</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -472,6 +513,7 @@
           <div class="day-title"><div class="dt">10 / 2　星期五</div><h3>姬路城</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day6-himeji-castle.jpg" alt="國寶姬路城白色天守（白鷺城）" loading="lazy" decoding="async"><figcaption>姬路城 · 國寶白鷺城</figcaption></figure>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:40</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:00</div><div class="what">🚄 <span class="rt">岡山 → 姬路〔山陽新幹線 自由席 約20-30分,¥3,280〕08:25</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-姫路" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -511,6 +553,7 @@
           <div class="day-title"><div class="dt">10 / 3　星期六</div><h3>後樂園 · 回家</h3></div>
         </div>
         <div class="card">
+          <figure class="daypic"><img src="img/day7-korakuen.jpg" alt="後樂園庭園借景遠處的岡山城天守" loading="lazy" decoding="async"><figcaption>後樂園 · 借景岡山城</figcaption></figure>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:00</div><div class="what"><b>早餐 → 07:40 退房、行李寄放飯店櫃台</b></div></div>
           <div class="leg t"><div class="when">07:50</div><div class="what">🚶 <span class="rt">飯店 → 後樂園（步行約20分／路面電車「城下」／計程車5分）</span></div></div>
@@ -631,6 +674,18 @@
   <footer>
     <span class="pill">DRAFT · 會持續更新</span>
     <p>這是討論用草稿，內容還會調整。<br>有任何想法、想去的地方，都歡迎提出來一起喬。</p>
+    <details class="credits">
+      <summary>照片來源 / 授權</summary>
+      <ul>
+        <li><b>Day1 岡山城</b>　Martin Falbisoner，CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Okayama_Castle,_November_2016_-01.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day2 瀨戶大橋</b>　Hideyuki KAMON，CC BY-SA 2.0　<a href="https://commons.wikimedia.org/wiki/File:Seto-Ohashi_Bridge.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day3 倉敷美觀地區</b>　Suicasmo，CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Kurashiki_Bikan_historical_quarter_20190324.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day4 豊島唐櫃梯田</b>　Kentaro Ohno，CC BY 2.0　<a href="https://commons.wikimedia.org/wiki/File:Agricultural_fields_on_Teshima.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day5 栗林公園</b>　ブルーノ・プラス（Bruno Plas），CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Ritsurin_garden_kangetsu_bridge.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day6 姬路城</b>　Gorgo，Public Domain（公有領域）　<a href="https://commons.wikimedia.org/wiki/File:Himeji_Castle_0804_1.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>Day7 後樂園</b>　Motokoka，CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Korakuen_(japanese_garden)_and_Okayama_castle.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+      </ul>
+    </details>
   </footer>
 
 </div>

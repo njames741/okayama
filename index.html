@@ -236,7 +236,25 @@
   footer .credits li{padding:5px 0;border-top:1px solid var(--line);}
   footer .credits li b{color:var(--text);font-weight:600;}
   footer .credits a{color:var(--sea);}
+
+  /* ---------- maps ---------- */
+  .mapfold .fold-body{padding-left:13px;}
+  .mapwrap{position:relative;}
+  .mapstatic{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);}
+  .mapbtn{margin-top:8px;font-family:var(--label);font-size:12.5px;font-weight:700;color:#fff;background:var(--sea);border:none;border-radius:999px;padding:7px 14px;cursor:pointer;letter-spacing:.03em;}
+  .mapbtn:hover{background:#21434c;}
+  .mapint{width:100%;height:380px;border-radius:10px;border:1px solid var(--line);overflow:hidden;}
+  .mapint-lg{height:clamp(340px,62vh,560px);}
+  .maplegend{list-style:none;margin:12px 0 2px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;}
+  @media (max-width:520px){ .maplegend{grid-template-columns:1fr;} }
+  .maplegend li{display:flex;align-items:center;gap:8px;font-size:12.5px;line-height:1.4;color:var(--text);}
+  .maplegend .lg-n{flex:0 0 auto;width:18px;height:18px;border-radius:50%;color:#fff;font:700 11px/18px var(--label);text-align:center;}
+  .maplegend .lg-d{flex:0 0 auto;width:11px;height:11px;border-radius:50%;margin:0 3px;}
+  .maplegend .lg-l em{color:var(--muted);font-style:normal;font-size:11px;}
+  .leaflet-container{font-family:var(--sans);}
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -275,6 +293,15 @@
     </ul>
   </section>
 
+  <section aria-label="全程地圖">
+    <div class="sec-head"><p class="eyebrow">Map</p><h2>全程地圖</h2></div>
+    <p class="lead" style="margin:-4px 0 16px;">七天所有景點、車站與餐廳（含備選）都點在地圖上，<b>顏色分天</b>。每天卡片裡也各有一張「當日地圖」。</p>
+    <details class="fold mapfold" style="margin-left:0;"><summary>🗺 展開全程互動地圖</summary><div class="fold-body">
+      <div id="mapall" class="mapint mapint-lg"></div>
+      <p class="note" style="margin-top:10px;">點任一點看名稱與 Google 連結。部分小店為概略位置，以彈窗內 Google 連結為準。</p>
+    </div></details>
+  </section>
+
   <section aria-label="每日行程">
     <div class="sec-head">
       <p class="eyebrow">Day by day</p>
@@ -290,6 +317,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day1-okayama-castle.jpg" alt="岡山城（烏城）黑色天守" loading="lazy" decoding="async"><figcaption>岡山城 · 烏城</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="1">
+            <div class="mapwrap"><img class="mapstatic" src="img/map1.jpg" alt="Day1 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">16:30</div><div class="what"><b>桃太郎機場降落</b><small>入境、提行李約 30-40 分</small></div></div>
           <div class="leg t"><div class="when">17:25*</div><div class="what">🚌 <span class="rt">機場 → 利木津巴士（リムジンバス・機場巴士，約30分,¥1,000）→ 岡山站西口</span>　<a href="https://www.okayama-airport.org/access/bus" target="_blank" rel="noopener">時刻表↗</a></div></div>
@@ -323,6 +354,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day2-seto-ohashi.jpg" alt="瀨戶大橋跨越瀨戶內海連結本州與四國的空拍" loading="lazy" decoding="async"><figcaption>瀨戶大橋 · 跨海連島</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="2">
+            <div class="mapwrap"><img class="mapstatic" src="img/map2.jpg" alt="Day2 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定 · 待對賽程</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
           <div class="leg t"><div class="when">08:00</div><div class="what">🚃 <span class="rt">岡山 → 兒島〔マリンライナー（Marine Liner 瀨戶大橋快速）24分,¥510〕08:24</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-児島" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -365,6 +400,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day3-kurashiki-bikan.jpg" alt="倉敷美觀地區柳川運河與白牆町家、垂柳" loading="lazy" decoding="async"><figcaption>倉敷美觀地區 · 柳川運河</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="3">
+            <div class="mapwrap"><img class="mapstatic" src="img/map3.jpg" alt="Day3 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:50</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:05</div><div class="what">🚃 <span class="rt">岡山 → 倉敷〔山陽本線 16分,¥330〕08:21</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-倉敷" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -417,6 +456,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day4-teshima-terraces.jpg" alt="豊島唐櫃的梯田與瀨戶內海，豊島美術館即坐落於此" loading="lazy" decoding="async"><figcaption>豊島唐櫃 · 梯田與海</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="4">
+            <div class="mapwrap"><img class="mapstatic" src="img/map4.jpg" alt="Day4 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:05</div><div class="what"><b>飯店出發 → 岡山站（步行5分）</b></div></div>
           <div class="leg t"><div class="when">07:32</div><div class="what">🚃 <span class="rt">岡山 →〔瀨戶大橋線 約15分〕茶屋町 07:47 ‧ <b>同站轉乘</b> 08:01 →〔宇野みなと線（宇野港線）〕→ 宇野 08:25（¥590）</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-宇野" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -469,6 +512,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day5-ritsurin.jpg" alt="栗林公園南湖上的偃月橋與庭園" loading="lazy" decoding="async"><figcaption>栗林公園 · 偃月橋</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="5">
+            <div class="mapwrap"><img class="mapstatic" src="img/map5.jpg" alt="Day5 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定 · 悠閒日</span>
           <div class="leg"><div class="when">08:00</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:10</div><div class="what">🚃 <span class="rt">岡山 → 高松〔マリンライナー（Marine Liner 瀨戶大橋快速） <b>跨瀨戶大橋</b> 約53分,¥1,660〕09:05</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -514,6 +561,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day6-himeji-castle.jpg" alt="國寶姬路城白色天守（白鷺城）" loading="lazy" decoding="async"><figcaption>姬路城 · 國寶白鷺城</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="6">
+            <div class="mapwrap"><img class="mapstatic" src="img/map6.jpg" alt="Day6 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:40</div><div class="what"><b>飯店出發</b></div></div>
           <div class="leg t"><div class="when">08:00</div><div class="what">🚄 <span class="rt">岡山 → 姬路〔山陽新幹線 自由席 約20-30分,¥3,280〕08:25</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-姫路" target="_blank" rel="noopener">查班次↗</a></div></div>
@@ -554,6 +605,10 @@
         </div>
         <div class="card">
           <figure class="daypic"><img src="img/day7-korakuen.jpg" alt="後樂園庭園借景遠處的岡山城天守" loading="lazy" decoding="async"><figcaption>後樂園 · 借景岡山城</figcaption></figure>
+          <details class="fold mapfold"><summary>🗺 當日地圖</summary><div class="fold-body mapbody" data-day="7">
+            <div class="mapwrap"><img class="mapstatic" src="img/map7.jpg" alt="Day7 行程地圖" loading="lazy" decoding="async"><br><button class="mapbtn" type="button">🔍 開啟互動地圖（可縮放、點 pin 看店名）</button></div>
+            <ol class="maplegend"></ol>
+          </div></details>
           <span class="tag set">已定</span>
           <div class="leg"><div class="when">07:00</div><div class="what"><b>早餐 → 07:40 退房、行李寄放飯店櫃台</b></div></div>
           <div class="leg t"><div class="when">07:50</div><div class="what">🚶 <span class="rt">飯店 → 後樂園（步行約20分／路面電車「城下」／計程車5分）</span></div></div>
@@ -684,6 +739,7 @@
         <li><b>Day5 栗林公園</b>　ブルーノ・プラス（Bruno Plas），CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Ritsurin_garden_kangetsu_bridge.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
         <li><b>Day6 姬路城</b>　Gorgo，Public Domain（公有領域）　<a href="https://commons.wikimedia.org/wiki/File:Himeji_Castle_0804_1.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
         <li><b>Day7 後樂園</b>　Motokoka，CC BY-SA 4.0　<a href="https://commons.wikimedia.org/wiki/File:Korakuen_(japanese_garden)_and_Okayama_castle.jpg" target="_blank" rel="noopener">Wikimedia↗</a></li>
+        <li><b>地圖</b>　© OpenStreetMap 貢獻者（openstreetmap.org/copyright）；互動地圖以 Leaflet 顯示</li>
       </ul>
     </details>
   </footer>
@@ -739,6 +795,93 @@
   }else{
     document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
   }
+})();
+</script>
+<script>
+var TRIP_PTS=[{"d":1,"l":"岡山桃太郎機場","k":"air","la":34.756973,"lo":133.853869,"g":"","a":0},{"d":1,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":1,"l":"後樂飯店","k":"hotel","la":34.664837,"lo":133.923195,"g":"","a":0},{"d":1,"l":"味司 野村（晚餐）","k":"meal","la":34.665195,"lo":133.923725,"g":"https://www.google.com/maps/search/味司野村 岡山市北区平和町","a":0},{"d":1,"l":"西川綠道公園","k":"site","la":34.65717,"lo":133.922914,"g":"","a":0},{"d":1,"l":"岡山城（夜景）","k":"site","la":34.665176,"lo":133.936045,"g":"","a":0},{"d":1,"l":"牛かつ上村（備選）","k":"meal2","la":34.66202,"lo":133.917354,"g":"https://www.google.com/maps/search/イオンモール岡山","a":0},{"d":1,"l":"さんすて岡山（備選）","k":"meal2","la":34.665815,"lo":133.917383,"g":"https://www.google.com/maps/search/さんすて岡山","a":0},{"d":1,"l":"お好み焼き もり（備選）","k":"meal2","la":34.6655,"lo":133.9165,"g":"https://www.google.com/maps/search/お好み焼きもり 岡山駅","a":1},{"d":1,"l":"軍鶏農場（備選）","k":"meal2","la":34.66202,"lo":133.91735,"g":"https://www.google.com/maps/search/軍鶏農場 イオンモール岡山","a":1},{"d":1,"l":"燒肉ぐりぐり家 岡山駅前（備選）","k":"meal2","la":34.666,"lo":133.9198,"g":"https://www.google.com/maps/search/焼肉ぐりぐり家 岡山駅前店","a":1},{"d":2,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":2,"l":"兒島站","k":"stn","la":34.462741,"lo":133.807665,"g":"","a":0},{"d":2,"l":"鷲羽山第二展望台","k":"site","la":34.433854,"lo":133.814157,"g":"","a":0},{"d":2,"l":"鷲羽山","k":"site","la":34.435488,"lo":133.812472,"g":"","a":0},{"d":2,"l":"ボートレース児島（競艇）","k":"site","la":34.449402,"lo":133.809098,"g":"","a":0},{"d":2,"l":"キッチン高山（備選）","k":"meal2","la":34.459056,"lo":133.800958,"g":"https://www.google.com/maps/search/キッチン高山 児島","a":0},{"d":2,"l":"讃岐うどん・児島駅（備選）","k":"meal2","la":34.462741,"lo":133.807665,"g":"https://www.google.com/maps/search/児島駅 うどん","a":0},{"d":2,"l":"お好美屋（備選）","k":"meal2","la":34.46274,"lo":133.80767,"g":"https://www.google.com/maps/search/お好美屋 児島","a":1},{"d":2,"l":"らーめんせんや（備選）","k":"meal2","la":34.46274,"lo":133.80767,"g":"https://www.google.com/maps/search/らーめんせんや 児島","a":1},{"d":3,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":3,"l":"倉敷站","k":"stn","la":34.60127,"lo":133.766039,"g":"","a":0},{"d":3,"l":"倉敷美觀地區","k":"site","la":34.596525,"lo":133.772586,"g":"","a":0},{"d":3,"l":"元町珈琲 倉敷の離れ（早午餐）","k":"meal","la":34.58052,"lo":133.7845,"g":"","a":0},{"d":3,"l":"總社站","k":"stn","la":34.673378,"lo":133.738011,"g":"","a":0},{"d":3,"l":"備中高松站","k":"stn","la":34.68655,"lo":133.822341,"g":"","a":0},{"d":3,"l":"ウシダサイクル（租車）","k":"rent","la":34.68655,"lo":133.82234,"g":"","a":1},{"d":3,"l":"造山古墳","k":"site","la":34.673462,"lo":133.80375,"g":"","a":0},{"d":3,"l":"備中國分寺（五重塔）","k":"site","la":34.666537,"lo":133.781817,"g":"","a":0},{"d":3,"l":"吉備津神社","k":"site","la":34.670682,"lo":133.850611,"g":"","a":0},{"d":3,"l":"吉備津站","k":"stn","la":34.674411,"lo":133.846053,"g":"","a":0},{"d":3,"l":"三宅商店（備選）","k":"meal2","la":34.596325,"lo":133.772286,"g":"https://www.google.com/maps/search/三宅商店 倉敷美観地区","a":0},{"d":3,"l":"林源十郎商店（備選）","k":"meal2","la":34.59732,"lo":133.770479,"g":"https://www.google.com/maps/search/林源十郎商店 倉敷","a":0},{"d":3,"l":"有鄰庵（備選）","k":"meal2","la":34.596671,"lo":133.772009,"g":"https://www.google.com/maps/search/有鄰庵 倉敷美観地区","a":0},{"d":3,"l":"cafe gewa（備選）","k":"meal2","la":34.597425,"lo":133.770459,"g":"https://www.google.com/maps/search/cafe gewa 倉敷","a":0},{"d":4,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":4,"l":"茶屋町站","k":"stn","la":34.577084,"lo":133.825903,"g":"","a":0},{"d":4,"l":"宇野站","k":"stn","la":34.493891,"lo":133.953713,"g":"","a":0},{"d":4,"l":"宇野港","k":"port","la":34.51041,"lo":133.965938,"g":"","a":0},{"d":4,"l":"家浦港（豊島）","k":"port","la":34.489446,"lo":134.061191,"g":"","a":0},{"d":4,"l":"豊島美術館","k":"site","la":34.49001,"lo":134.091321,"g":"","a":0},{"d":4,"l":"島キッチン（午餐）","k":"meal","la":34.48482,"lo":134.086789,"g":"https://www.google.com/maps/search/島キッチン 豊島","a":0},{"d":4,"l":"橫尾館","k":"site","la":34.486909,"lo":134.059661,"g":"","a":0},{"d":5,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":5,"l":"高松站","k":"stn","la":34.350696,"lo":134.046912,"g":"","a":0},{"d":5,"l":"高松築港站","k":"stn","la":34.350728,"lo":134.049485,"g":"","a":0},{"d":5,"l":"栗林公園","k":"site","la":34.329497,"lo":134.043926,"g":"","a":0},{"d":5,"l":"めりけんや 高松駅前（午餐）","k":"meal","la":34.34971,"lo":134.04729,"g":"https://www.google.com/maps/search/めりけんや 高松駅前店","a":0},{"d":5,"l":"高松城（玉藻公園）","k":"site","la":34.350112,"lo":134.051013,"g":"","a":0},{"d":5,"l":"屋島站","k":"stn","la":34.336581,"lo":134.109179,"g":"","a":0},{"d":5,"l":"四國村ミウゼアム","k":"site","la":34.34509,"lo":134.1096,"g":"","a":0},{"d":5,"l":"味庄（午餐備選）","k":"meal2","la":34.34971,"lo":134.04729,"g":"https://www.google.com/maps/search/さぬき手打 味庄 高松","a":1},{"d":5,"l":"うどんバカ一代（午餐備選）","k":"meal2","la":34.336756,"lo":134.058608,"g":"https://www.google.com/maps/search/うどんバカ一代 高松","a":0},{"d":5,"l":"さか枝うどん本店（午餐備選）","k":"meal2","la":34.3432,"lo":134.0438,"g":"https://www.google.com/maps/search/さか枝うどん 本店 高松","a":1},{"d":5,"l":"寄鳥味鳥（骨付鳥・晚餐）","k":"meal","la":34.3495,"lo":134.0495,"g":"https://www.google.com/maps/search/骨付鳥 寄鳥味鳥 高松","a":1},{"d":5,"l":"一鶴 高松店（晚餐備選）","k":"meal2","la":34.34306,"lo":134.04876,"g":"https://www.google.com/maps/search/骨付鳥 一鶴 高松店","a":0},{"d":6,"l":"岡山站","k":"stn","la":34.666,"lo":133.9179,"g":"","a":0},{"d":6,"l":"姬路站","k":"stn","la":34.827496,"lo":134.688991,"g":"","a":0},{"d":6,"l":"姬路城","k":"site","la":34.839331,"lo":134.69402,"g":"","a":0},{"d":6,"l":"好古園","k":"site","la":34.837969,"lo":134.689613,"g":"","a":0},{"d":6,"l":"まねきのえきそば（午餐）","k":"meal","la":34.8275,"lo":134.68899,"g":"https://www.google.com/maps/search/まねきのえきそば ピオレ姫路","a":1},{"d":6,"l":"書寫山纜車 山麓駅","k":"stn","la":34.87294,"lo":134.66061,"g":"","a":1},{"d":6,"l":"書寫山纜車 山上駅","k":"stn","la":34.87726,"lo":134.66498,"g":"","a":1},{"d":6,"l":"書寫山圓教寺","k":"site","la":34.878598,"lo":134.667065,"g":"","a":0},{"d":6,"l":"男山配水池公園（備選）","k":"alt","la":34.840938,"lo":134.689704,"g":"https://www.google.com/maps/search/男山配水池公園 姫路","a":0},{"d":6,"l":"豚屋とん一 姫路駅前（備選）","k":"meal2","la":34.82802,"lo":134.691258,"g":"https://www.google.com/maps/search/豚屋とん一 姫路駅前店","a":0},{"d":6,"l":"姫路おでん（午/晚備選）","k":"meal2","la":34.8275,"lo":134.68899,"g":"https://www.google.com/maps/search/姫路おでん ピオレ姫路","a":1},{"d":6,"l":"チャンポン焼（備選）","k":"meal2","la":34.8285,"lo":134.6895,"g":"https://www.google.com/maps/search/姫路駅 お好み焼き チャンポン焼","a":1},{"d":7,"l":"後樂飯店","k":"hotel","la":34.664837,"lo":133.923195,"g":"","a":0},{"d":7,"l":"後樂園","k":"site","la":34.66633,"lo":133.937395,"g":"","a":0},{"d":7,"l":"さんすて岡山（採買）","k":"stn","la":34.665815,"lo":133.917383,"g":"https://www.google.com/maps/search/さんすて岡山","a":0},{"d":7,"l":"岡山桃太郎機場","k":"air","la":34.756973,"lo":133.853869,"g":"","a":0},{"d":0,"l":"すわき後楽中華そば","k":"meal2","la":34.66469,"lo":133.92662,"g":"https://www.google.com/maps/search/すわき後楽中華そば 岡山高島屋","a":1},{"d":0,"l":"浅月 本店","k":"meal2","la":34.66851,"lo":133.91584,"g":"https://www.google.com/maps/search/浅月 本店 岡山","a":0},{"d":0,"l":"オムライス おむや","k":"meal2","la":34.66606,"lo":133.91806,"g":"https://www.google.com/maps/search/オムライスの店 おむや 岡山","a":1},{"d":0,"l":"いらっしゃい亭","k":"meal2","la":34.6665,"lo":133.919,"g":"https://www.google.com/maps/search/いらっしゃい亭 岡山","a":1},{"d":0,"l":"炭 軍司","k":"meal2","la":34.6668,"lo":133.9195,"g":"https://www.google.com/maps/search/炭 軍司 岡山駅前","a":1}];
+
+var MAP_COL={site:'#7E9233',stn:'#2C5560',port:'#3E7C8C',hotel:'#6B6F60',air:'#6B6F60',rent:'#8A7E5A',meal:'#D2603F',meal2:'#E0A188',alt:'#B0982E'};
+function _icon(col,txt,big){
+  var s=big?26:15, b=big?2:1.5, fs=big?13:0;
+  var inner=big?('<span style="color:#fff;font:700 '+fs+'px/1 ui-sans-serif,system-ui;">'+txt+'</span>'):'';
+  return L.divIcon({className:'tm-pin',iconSize:[s,s],iconAnchor:[s/2,s/2],popupAnchor:[0,-s/2],
+    html:'<div style="width:'+s+'px;height:'+s+'px;border-radius:50%;background:'+col+';border:'+b+'px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;">'+inner+'</div>'});
+}
+function makeMap(el,day,opts){
+  opts=opts||{};
+  var pts=TRIP_PTS.filter(function(p){return p.d==day;});
+  if(!pts.length) return null;
+  var map=L.map(el,{zoomControl:opts.ui!==false,scrollWheelZoom:false,attributionControl:true});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+  var route=[],all=[],n=0;
+  pts.forEach(function(p){
+    var ll=[p.la,p.lo]; all.push(ll);
+    var isStop=(p.k!=='meal2'&&p.k!=='alt');
+    var col=MAP_COL[p.k]||'#6B6F60';
+    var mk;
+    if(isStop){ n++; mk=L.marker(ll,{icon:_icon(col,n,true),zIndexOffset:500}); }
+    else { mk=L.marker(ll,{icon:_icon(col,'',false)}); }
+    var html='<b>'+p.l+'</b>'+(p.a?'<br><span style="color:#8a6a55;font-size:11px;">概略位置（詳見下方連結）</span>':'');
+    if(p.g) html+='<br><a href="'+p.g+'" target="_blank" rel="noopener">Google 地圖↗</a>';
+    mk.bindPopup(html);
+    mk.addTo(map);
+    if(isStop) route.push(ll);
+  });
+  if(route.length>1) L.polyline(route,{color:'#2C5560',weight:2.5,opacity:.55,dashArray:'5,6'}).addTo(map);
+  map.fitBounds(all,{padding:opts.pad||[34,34]});
+  if(all.length===1) map.setZoom(15);
+  return map;
+}
+
+function _inval(m){ if(m) setTimeout(function(){m.invalidateSize();},60); }
+function buildLegend(ol,day){
+  var n=0;
+  TRIP_PTS.filter(function(p){return p.d==day;}).forEach(function(p){
+    var stop=(p.k!=='meal2'&&p.k!=='alt');
+    var col=MAP_COL[p.k]||'#6B6F60';
+    var badge=stop?('<span class="lg-n" style="background:'+col+'">'+(++n)+'</span>')
+                  :('<span class="lg-d" style="background:'+col+'"></span>');
+    var li=document.createElement('li');
+    li.innerHTML=badge+'<span class="lg-l">'+p.l+(p.a?' <em>（概略）</em>':'')+'</span>';
+    ol.appendChild(li);
+  });
+}
+function makeOverview(el){
+  var DCOL={1:'#D2603F',2:'#7E9233',3:'#3E7C8C',4:'#B0982E',5:'#2C5560',6:'#9C5BA6',7:'#C0683C'};
+  var map=L.map(el,{scrollWheelZoom:false});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+  var all=[];
+  [1,2,3,4,5,6,7].forEach(function(day){
+    var route=[];
+    TRIP_PTS.filter(function(p){return p.d==day;}).forEach(function(p){
+      var ll=[p.la,p.lo]; all.push(ll);
+      var stop=(p.k!=='meal2'&&p.k!=='alt');
+      var mk=L.circleMarker(ll,{radius:stop?6:4,color:'#fff',weight:1.2,fillColor:DCOL[day],fillOpacity:.95});
+      mk.bindPopup('<b>Day'+day+'</b>　'+p.l+(p.g?'<br><a href="'+p.g+'" target="_blank" rel="noopener">Google 地圖↗</a>':''));
+      mk.addTo(map);
+      if(stop) route.push(ll);
+    });
+    if(route.length>1) L.polyline(route,{color:DCOL[day],weight:2,opacity:.5}).addTo(map);
+  });
+  map.fitBounds(all,{padding:[30,30]});
+  return map;
+}
+document.querySelectorAll('.mapbody').forEach(function(b){
+  var day=+b.getAttribute('data-day');
+  buildLegend(b.querySelector('.maplegend'),day);
+  var btn=b.querySelector('.mapbtn');
+  btn.addEventListener('click',function(){
+    var wrap=b.querySelector('.mapwrap');
+    var d=document.createElement('div'); d.className='mapint';
+    wrap.parentNode.insertBefore(d,wrap); wrap.style.display='none';
+    _inval(makeMap(d,day,{ui:true}));
+  });
+});
+(function(){
+  var ovd=document.getElementById('mapall');
+  if(!ovd) return;
+  var det=ovd.closest('details');
+  det.addEventListener('toggle',function(){ if(det.open && !ovd._init){ ovd._init=1; _inval(makeOverview(ovd)); } });
 })();
 </script>
 </body>

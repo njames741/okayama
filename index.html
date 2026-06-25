@@ -153,6 +153,12 @@
   .fold-body a{color:var(--sea);font-weight:700;white-space:nowrap;}
   .fold-body .row{margin:0 0 5px;}
   .fold-body .tt{font-family:var(--label);font-size:12.5px;color:var(--text);background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:7px;padding:7px 10px;margin:4px 0 2px;letter-spacing:.02em;}
+  .fold-body .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:5px 0 7px;border:1px solid var(--line);border-radius:8px;}
+  .fold-body table{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px;background:rgba(255,255,255,.5);}
+  .fold-body th,.fold-body td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;}
+  .fold-body th{background:var(--peach-wash);color:var(--text);font-weight:700;white-space:nowrap;}
+  .fold-body tr:last-child td{border-bottom:0;}
+  .fold-body td b{color:var(--text);}
   @media (max-width:560px){ .fold{margin-left:0;} }
   .tag{
     display:inline-block;font-family:var(--label);font-size:11px;font-weight:700;
@@ -344,11 +350,15 @@
           <div class="leg"><div class="when">09:05</div><div class="what"><b>家浦港租電動輔助自行車</b><small>下船正對面就有多家，50 台以上、約 ¥1,000/日。旺日會借光 → 建議先預約</small></div></div>
           <details class="fold"><summary>家浦港租車店比較 · 推薦哪家（含價格）</summary><div class="fold-body">
             <div class="row"><b>價格幾乎一致</b>：電動車多落在 ¥1,000（4hr）～¥1,500（一日）；一般車很少店有（島上坡陡、店家多只進電動）。電動 vs 一般差約 ¥500–1,000/日。</div>
-            <div class="row">⭐ <b>首選 NPO豊島PP（豊島PP合同会社）</b>：步行3分。電動 4hr¥1,000／<b>一日 ¥1,500</b>，<b>台數最多(50台)＋可線上/電話預約(080-2943-7788)＋免費寄行李</b>、收現金。怕旺日借光就訂這家。</div>
-            <div class="row"><b>土庄町電動レンタサイクル</b>：<b>港口正對面、一下船就租最省事</b>。4hr¥1,000、超過每hr+¥100。<b>不能預約、先到先得</b>（旺日有借光風險）。</div>
-            <div class="row"><b>緋田石油（豊島レンタサイクル）</b>：步行4-5分。電動一日 ¥1,000（偏便宜）、免費寄行李、收現金；不能預約。</div>
-            <div class="row"><b>レンタカーあき（安岐石油）</b>：步行5-6分。電動 ¥1,300/日，<b>唯一明確有便宜一般車 ¥500/日</b>；可電話預約 090-7897-8660。</div>
-            <div class="row"><b>瀬戸内カレン</b>：電動 ¥1,800/日（最貴）；僅線上預約、<b>不收現金</b>（卡／IC／PayPay／LINE Pay）。沒帶足現金才考慮。</div>
+            <div class="tbl-wrap"><table>
+              <tr><th>店家</th><th>離港</th><th>電動車</th><th>一般車</th><th>預約</th><th>付款</th><th>重點</th></tr>
+              <tr><td>⭐<b>NPO豊島PP</b><br><small>（豊島PP合同公司）</small></td><td>步行3分</td><td>4hr¥1,000／<b>1日¥1,500</b></td><td>以電動為主</td><td>✅線上＋電話<br>080-2943-7788</td><td>含現金</td><td><b>台數最多(50台)＋可預約＋免費寄行李</b>，怕旺日借光首選</td></tr>
+              <tr><td><b>土庄町電動レンタサイクル</b><br><small>（土庄町電動租車）</small></td><td>港正對面</td><td>4hr¥1,000、<br>超過每hr+¥100</td><td>無</td><td>❌先到先得</td><td>現金</td><td><b>一下船就租最省事</b>；不能預約、旺日有借光風險</td></tr>
+              <tr><td><b>緋田石油</b><br><small>（豊島レンタサイクル＝豊島租車）</small></td><td>步行4-5分</td><td>1日¥1,000（偏便宜）</td><td>無</td><td>❌先到先得</td><td>含現金</td><td>免費寄行李</td></tr>
+              <tr><td><b>レンタカーあき</b><br><small>（安岐租車／安岐石油）</small></td><td>步行5-6分</td><td>¥1,300/日</td><td><b>¥500/日</b><br>（另登山車¥500）</td><td>✅電話<br>090-7897-8660</td><td>含現金</td><td>唯一明確有便宜一般車</td></tr>
+              <tr><td><b>瀬戸内カレン</b><br><small>（瀨戶內 Karen）</small></td><td>港附近</td><td>¥1,800/日（最貴）</td><td>無</td><td>✅僅線上、<br>不接電話</td><td>❌<b>不收現金</b><br>（卡/IC/PayPay/LINE Pay）</td><td>沒帶足現金才考慮</td></tr>
+            </table></div>
+            <div class="row">另「<b>からと港レンタサイクル（唐櫃港租車）</b>」在<b>唐櫃港</b>、不在家浦，本動線用不到。多數店「只租電動」（島陡、不太進一般車）。</div>
             <div class="row">付款／押金多數沒明寫 → <b>帶現金＋護照備用</b>，預約時順便問。（査證 2026-06）</div>
           </div></details>
           <div class="leg t"><div class="when">09:20</div><div class="what">🚲 <span class="rt">電動車 家浦港 → 唐櫃・豊島美術館（約 3.8km、中段陡上坡有助力，約 20-25 分）~09:45</span></div></div>
@@ -374,7 +384,7 @@
         <div class="card">
           <span class="tag set">已定 · 悠閒日</span>
           <div class="leg"><div class="when">08:00</div><div class="what"><b>飯店出發</b></div></div>
-          <div class="leg t"><div class="when">08:10</div><div class="what">🚃 <span class="rt">岡山 → 高松〔マリンライナー <b>跨瀨戶大橋</b> 約53分,¥1,660〕09:05</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">08:10</div><div class="what">🚃 <span class="rt">岡山 → 高松〔マリンライナー（Marine Liner 瀨戶大橋快速） <b>跨瀨戶大橋</b> 約53分,¥1,660〕09:05</span>　<a href="https://transit.yahoo.co.jp/search/result/岡山-高松" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg t"><div class="when">09:20</div><div class="what">🚃 <span class="rt">高松築港 → 栗林公園〔琴電（ことでん・高松琴平電鐵）8分,¥210〕→ 步行10分</span>　<a href="https://transit.yahoo.co.jp/search/result/高松築港-栗林公園" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg"><div class="when">09:40</div><div class="what"><b>栗林公園（2hr 悠閒）</b><small>特別名勝大庭園：南湖和船、掬月亭抹茶、飛來峰眺望，平坦好走，約到 11:40</small></div></div>
           <div class="leg t"><div class="when">11:50</div><div class="what">🚃 <span class="rt">栗林公園 → 高松築港〔琴電 8分〕12:00</span></div></div>
@@ -466,7 +476,7 @@
     <details class="fold" style="margin-left:0;"><summary>新幹線（Day6 姬路）：裸 ICOCA 刷不進，要另外買票</summary><div class="fold-body">
       <div class="row"><b>一般 ICOCA 不能直接感應新幹線改札（閘門）</b>、會被擋。最省事＝<b>當天在岡山站「みどりの券売機（綠色售票機）」買「自由席」紙本票</b>（岡山⇄姬路單程 ¥3,280，付現或刷卡皆可）。</div>
       <div class="row">進站把<b>乗車券＋特急券兩張疊著一起投入改札</b>，兩張會一起吐出、記得抽回。自由席不用劃位、隨到搭任一班。</div>
-      <div class="row">（想用手機 IC 感應搭，可免費註冊 <b>スマートEX</b> 綁信用卡＋IC 卡；但這種短程一段，現買紙本反而快。）</div>
+      <div class="row">（想用手機 IC 感應搭，可免費註冊 <b>スマートEX（Smart EX，JR 東海/西日本新幹線網路訂票服務）</b> 綁信用卡＋IC 卡；但這種短程一段，現買紙本反而快。）</div>
     </div></details>
     <details class="fold" style="margin-left:0;"><summary>日本巴士怎麼上車？（後門上、前門下）</summary><div class="fold-body">
       <div class="row">鄉間巴士多<b>按距離計費</b>：<b>從後門（中門）上車</b>，付現的話先抽一張<b>整理券</b>（印著號碼）；看車頭「運賃表」上你那號碼對應的金額，<b>前門下車</b>投現金＋整理券（沒零錢用車上兌幣口先換，不找零）。</div>

@@ -23,7 +23,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
   body{
     margin:0;background:var(--ground);color:var(--text);
     font-family:var(--sans);line-height:1.7;
@@ -84,11 +84,14 @@
 
   /* ---------- overview ---------- */
   .ov{list-style:none;margin:0;padding:0;}
-  .ov li{
-    display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:baseline;
-    padding:13px 0;border-bottom:1px solid var(--line);
-  }
+  .ov li{border-bottom:1px solid var(--line);}
   .ov li:last-child{border-bottom:none;}
+  .ov .ovlink{
+    display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:baseline;
+    padding:13px 0;text-decoration:none;color:inherit;
+  }
+  .ov .ovlink .t,.ov .ovlink .d{transition:color .15s ease;}
+  .ov .ovlink:hover .t,.ov .ovlink:focus-visible .t{color:var(--accent);}
   .ov .d{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:700;}
   .ov .t{font-weight:600;}
   .ov .t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;letter-spacing:.04em;font-family:var(--label);margin-top:1px;}
@@ -108,7 +111,7 @@
   /* ---------- day timeline ---------- */
   .days{position:relative;}
   .day{
-    position:relative;padding:0 0 12px 0;margin-bottom:30px;
+    position:relative;padding:0 0 12px 0;margin-bottom:30px;scroll-margin-top:18px;
   }
   .day-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px;}
   .num{
@@ -209,7 +212,7 @@
     <h1>岡山<span class="sep">·</span>七日</h1>
     <p class="thesis">以岡山為家，每天往瀨戶內海的不同方向出發——庭園、運河老街、藝術離島、跨海大橋、白鷺名城。</p>
     <div class="facts">
-      <span>4 人 · 含 2 位長輩</span>
+      <span>4 人同行</span>
       <span>後樂飯店（站旁）</span>
       <span>大眾運輸</span>
       <span>悠閒步調</span>
@@ -226,13 +229,13 @@
       <h2>七天，一眼看完</h2>
     </div>
     <ul class="ov">
-      <li><span class="d">1</span><span class="t">抵達 · 岡山夜色<small>降落、進飯店、看烏城夜間點燈</small></span><span class="w">9/27 日</span></li>
-      <li><span class="d">2</span><span class="t">児島半島日<small>鷲羽山看橋、ボートレース児島競艇</small></span><span class="w">9/28 一</span></li>
-      <li><span class="d">3</span><span class="t">倉敷 × 吉備路<small>白牆老街、騎電動車訪稻田五重塔</small></span><span class="w">9/29 二</span></li>
-      <li><span class="d">4</span><span class="t">豊島 · 藝術跳島<small>豊島美術館、租電動車漫遊</small></span><span class="w">9/30 三</span></li>
-      <li><span class="d">5</span><span class="t">跨瀨戶大橋 × 高松<small>跨橋、栗林公園、高松城（可加屋島）</small></span><span class="w">10/1 四</span></li>
-      <li><span class="d">6</span><span class="t">姬路城<small>國寶白鷺城（可加書寫山圓教寺）</small></span><span class="w">10/2 五</span></li>
-      <li><span class="d">7</span><span class="t">後樂園 · 回家<small>三名園散步後出發</small></span><span class="w">10/3 六</span></li>
+      <li><a class="ovlink" href="#day1"><span class="d">1</span><span class="t">抵達 · 岡山夜色<small>降落、進飯店、看烏城夜間點燈</small></span><span class="w">9/27 日</span></a></li>
+      <li><a class="ovlink" href="#day2"><span class="d">2</span><span class="t">児島半島日<small>鷲羽山看橋、ボートレース児島競艇</small></span><span class="w">9/28 一</span></a></li>
+      <li><a class="ovlink" href="#day3"><span class="d">3</span><span class="t">倉敷 × 吉備路<small>白牆老街、騎電動車訪稻田五重塔</small></span><span class="w">9/29 二</span></a></li>
+      <li><a class="ovlink" href="#day4"><span class="d">4</span><span class="t">豊島 · 藝術跳島<small>豊島美術館、租電動車漫遊</small></span><span class="w">9/30 三</span></a></li>
+      <li><a class="ovlink" href="#day5"><span class="d">5</span><span class="t">跨瀨戶大橋 × 高松<small>跨橋、栗林公園、高松城、四國村</small></span><span class="w">10/1 四</span></a></li>
+      <li><a class="ovlink" href="#day6"><span class="d">6</span><span class="t">姬路城<small>國寶白鷺城、書寫山圓教寺</small></span><span class="w">10/2 五</span></a></li>
+      <li><a class="ovlink" href="#day7"><span class="d">7</span><span class="t">後樂園 · 回家<small>三名園散步後出發</small></span><span class="w">10/3 六</span></a></li>
     </ul>
   </section>
 
@@ -244,7 +247,7 @@
 
     <div class="days">
 
-      <article class="day reveal">
+      <article class="day reveal" id="day1">
         <div class="day-head">
           <div class="num">01<small>DAY</small></div>
           <div class="day-title"><div class="dt">9 / 27　星期日</div><h3>抵達 · 岡山夜色</h3></div>
@@ -262,21 +265,21 @@
           <div class="leg"><div class="when">17:55</div><div class="what"><b>抵岡山站 → 步行 5 分 → 後樂飯店 check-in</b></div></div>
           <div class="leg"><div class="when">18:30</div><div class="what"><b>站前接風晚餐：味司 野村（あじつかさ のむら／元祖デミカツ丼，元祖多蜜醬炸豬排丼）</b><small>岡山名物「半熟蛋＋多蜜醬汁炸豬排丼」發祥老店（1931 年）。一人約 <span class="yen">¥1,000–1,500</span>。位置就在西川綠道公園駅旁，剛好接今晚的散步動線。9/27 週日營業 11:00–21:00（週一公休）　<a href="https://www.google.com/maps/search/味司野村+岡山市北区平和町" target="_blank" rel="noopener">地圖↗</a></small></div></div>
           <details class="fold"><summary>晚餐備選（太累／客滿時，依「好到達」排序）</summary><div class="fold-body">
-            <div class="row">抵達日拖行李又帶長輩，下面備選<b>依好到達排序</b>。價位為<b>一人晚餐概估</b>，<span class="yen hi">紅字</span>＝一人 ¥2,000 以上。</div>
+            <div class="row">抵達日拖著行李，下面備選<b>依好到達排序</b>。價位為<b>一人晚餐概估</b>，<span class="yen hi">紅字</span>＝一人 ¥2,000 以上。</div>
             <div class="tbl-wrap"><table>
               <tr><th>店名（中文）</th><th>類型</th><th>一人約</th><th>為什麼推／注意</th><th>地圖</th></tr>
               <tr><td><b>牛かつ 上村</b><br><small>（炸牛排 上村）<br>@イオンモール岡山（永旺購物中心）</small></td><td>炸牛排定食</td><td><span class="yen">¥1,000<br>前後</span></td><td>半熟炸牛排定食；<b>與車站直結、拖行李最省事</b>，商場開到 22:00</td><td><a href="https://www.google.com/maps/search/イオンモール岡山" target="_blank" rel="noopener">地圖↗</a></td></tr>
               <tr><td><b>さんすて岡山</b><br><small>（站內商場）</small></td><td>站內餐廳街<br>（定食／炸物／炉端燒）</td><td><span class="yen">¥1,000–<br>1,800</span></td><td><b>完全不用出站</b>、最快開吃；定食、炉端燒（烤物）選擇多</td><td><a href="https://www.google.com/maps/search/さんすて岡山" target="_blank" rel="noopener">地圖↗</a></td></tr>
               <tr><td><b>お好み焼き もり</b><br><small>（大阪燒 Mori）</small></td><td>鐵板／岡山在地小吃</td><td><span class="yen">¥1,000–<br>1,500</span></td><td>站步行 7 分。一次嚐 <b>蒜山焼きそば（雞肉炒麵）、津山ホルモンうどん（內臟烏龍）、大阪燒</b></td><td><a href="https://www.google.com/maps/search/お好み焼きもり+岡山駅" target="_blank" rel="noopener">地圖↗</a></td></tr>
               <tr><td><b>軍鶏農場</b><br><small>（土雞農場）<br>@イオンモール岡山</small></td><td>土雞炭火料理／釜炊飯</td><td><span class="yen hi">¥2,600<br>前後</span></td><td>土雞炭火、釜炊白飯，家庭友善；與車站直結；<b>價位較高</b></td><td><a href="https://www.google.com/maps/search/軍鶏農場+イオンモール岡山" target="_blank" rel="noopener">地圖↗</a></td></tr>
-              <tr><td><b>焼肉 ぐりぐり家 岡山駅前店</b><br><small>（燒肉 Guriguriya）</small></td><td>燒肉吃到飽</td><td><span class="yen hi">¥3,000–<br>4,000</span></td><td>東口步行 1 分。4 人＋長輩吃肉划算；<b>吃到飽價位較高</b></td><td><a href="https://www.google.com/maps/search/焼肉ぐりぐり家+岡山駅前店" target="_blank" rel="noopener">地圖↗</a></td></tr>
+              <tr><td><b>焼肉 ぐりぐり家 岡山駅前店</b><br><small>（燒肉 Guriguriya）</small></td><td>燒肉吃到飽</td><td><span class="yen hi">¥3,000–<br>4,000</span></td><td>東口步行 1 分。多人吃肉划算；<b>吃到飽價位較高</b></td><td><a href="https://www.google.com/maps/search/焼肉ぐりぐり家+岡山駅前店" target="_blank" rel="noopener">地圖↗</a></td></tr>
             </table></div>
           </div></details>
           <div class="leg"><div class="when">19:30</div><div class="what"><b>西川綠道散步 ＋ 烏城夜景</b><small>岡山城夜間點燈、外觀免費（亮到 24:00）。累可改天看，每晚都點燈</small></div></div>
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day2">
         <div class="day-head">
           <div class="num">02<small>DAY</small></div>
           <div class="day-title"><div class="dt">9 / 28　星期一</div><h3>児島半島日</h3></div>
@@ -317,7 +320,7 @@
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day3">
         <div class="day-head">
           <div class="num">03<small>DAY</small></div>
           <div class="day-title"><div class="dt">9 / 29　星期二</div><h3>倉敷 × 吉備路</h3></div>
@@ -344,7 +347,7 @@
             <div class="row"><b>在總社駅轉車時先上廁所</b>（備中高松是小站、廁所較簡易）。</div>
             <div class="row">沿路有公廁：<b>造山古墳（駐車場）、備中國分寺（駐車場/觀光案內所）、吉備津神社</b>。<b>最長一段沒廁所＝備中高松駅→造山古墳，約15分</b>，剛在總社上過、可接受。</div>
           </div></details>
-          <div class="leg"><div class="when">13:20</div><div class="what"><b>ウシダサイクル（牛田單車行）租電動腳踏車</b><small>備中高松駅步行 3 分。長輩騎電動、平路輕鬆。<b>電動車須前一天電話預約</b></small></div></div>
+          <div class="leg"><div class="when">13:20</div><div class="what"><b>ウシダサイクル（牛田單車行）租電動腳踏車</b><small>備中高松駅步行 3 分。電動車騎平路輕鬆。<b>電動車須前一天電話預約</b></small></div></div>
           <details class="fold"><summary>租車店資訊 · 預約 · 還車時間（重要）</summary><div class="fold-body">
             <div class="row"><b>ウシダサイクル</b>（備中高松駅步行3分）。電話 <b>086-284-2167</b>，營業 <b>9:00–18:00</b>，公休週三＋第1・3週日（9/29 週二照常營業）。</div>
             <div class="row"><b>電動車要前一天打電話預約</b>（台數有限）。租金：一般車 2hr¥330／6hr+¥880；電動 2hr¥660／6hr+¥1,760，比總社荒木便宜。</div>
@@ -364,11 +367,11 @@
           <div class="leg"><div class="when">15:50</div><div class="what"><b>吉備津神社（約1hr）</b><small>吉備津駅步行 5 分。國寶本殿、長 360m 迴廊、御釜殿，平緩好走</small></div></div>
           <div class="leg t"><div class="when">16:51</div><div class="what">🚃 <span class="rt">吉備津 → 岡山〔桃太郎線 約14分,¥240〕17:05</span>　<a href="https://transit.yahoo.co.jp/search/result/吉備津-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg"><div class="when">晚餐</div><div class="what"><b>回岡山站晚餐</b><small>早午餐已是元町珈琲（見上方 09:40）；晚餐從 <a href="#dinner">岡山站晚餐口袋名單</a> 挑一家</small></div></div>
-          <p class="note">全程平坦、騎乘量小（來回約 10km、含逛 2-3hr），長輩騎電動剛好。想縮短＝跳過造山古墳直接到五重塔。租車店 18:00 關、<b>電動車記得前一天電話預約</b>。</p>
+          <p class="note">全程平坦、騎乘量小（來回約 10km、含逛 2-3hr），全程騎電動輕鬆。想縮短＝跳過造山古墳直接到五重塔。租車店 18:00 關、<b>電動車記得前一天電話預約</b>。</p>
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day4">
         <div class="day-head">
           <div class="num">04<small>DAY</small></div>
           <div class="day-title"><div class="dt">9 / 30　星期三</div><h3>豊島 · 藝術跳島</h3></div>
@@ -410,7 +413,7 @@
           <div class="leg"><div class="when">13:30</div><div class="what"><b>可選：橫尾館（家浦港旁）</b><small>橫尾忠則作品＋紅玻璃庭園，平坦好走，另票 ¥520 → 還電動車</small></div></div>
           <div class="leg t"><div class="when">16:25</div><div class="what">⛴️ <span class="rt">家浦港 → 宇野〔みらい 25分,¥780〕16:50 → 宇野みなと線回岡山 ~17:55</span>　<a href="https://www.shodoshima-ferry.co.jp/timetable/" target="_blank" rel="noopener">時刻表↗</a></div></div>
           <div class="leg"><div class="when">晚餐</div><div class="what"><b>回岡山站晚餐</b><small>從 <a href="#dinner">岡山站晚餐口袋名單</a> 挑一家</small></div></div>
-          <p class="note">下午有約 1-1.5 小時餘裕：可在唐櫃海邊咖啡悠閒待著，或長輩累就改搭 <b>14:00 家浦発→14:39 宇野</b> 早點回飯店休息。誠實留白，不硬塞。</p>
+          <p class="note">下午有約 1-1.5 小時餘裕：可在唐櫃海邊咖啡悠閒待著，或想早點回就改搭 <b>14:00 家浦発→14:39 宇野</b> 回飯店休息。誠實留白，不硬塞。</p>
           <details class="fold"><summary>☔ 雨天／颱風備案</summary><div class="fold-body">
             <div class="row">下雨不必取消、也不必騎車——改搭 <b>豊島シャトルバス（島內接駁巴士）</b>（家浦港↔美術館↔唐櫃，約 1–1.5hr 一班，¥400/趟、一日券 ¥1,500）。</div>
             <div class="row">豊島美術館是半開放空間、<b>雨天照常開館</b>，雨水會從天頂開口落入與作品的「泉」相融，小雨反而是獨特體驗、不必動。</div>
@@ -419,7 +422,7 @@
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day5">
         <div class="day-head">
           <div class="num">05<small>DAY</small></div>
           <div class="day-title"><div class="dt">10 / 1　星期四</div><h3>跨瀨戶大橋 × 高松</h3></div>
@@ -441,16 +444,16 @@
               <tr><td><b>さか枝うどん 本店</b><br><small>（坂枝烏龍）</small></td><td>自助式老舖</td><td><span class="yen">¥400–<br>800</span></td><td>県庁裏超人氣老店、60 種天婦羅自取</td><td><a href="https://www.google.com/maps/search/さか枝うどん+本店+高松" target="_blank" rel="noopener">地圖↗</a></td></tr>
             </table></div>
           </div></details>
-          <div class="leg"><div class="when">13:30</div><div class="what"><b>高松城（玉藻公園）</b><small>高松築港站旁步行 2 分；日本三大水城之一、海水堀與和船「玉藻丸」、月見櫓。平坦好走，約 1hr</small></div></div>
-          <div class="leg"><div class="when">下午</div><div class="what"><b>（推薦加碼）屋島：源平古戰場＋瀨戶內海展望</b><small>溶岩台地頂俯瞰瀨戶內海多島美與高松市街，有屋島寺、獅子の霊巌展望台、やしまーる景觀回廊；壯闊展望＋源平合戰史蹟，山上平緩好走。詳見折疊 ↓</small></div></div>
-          <details class="fold"><summary>屋島怎麼上去（⚠️ 週四沒接駁巴士，要計程車）</summary><div class="fold-body">
-            <div class="row">高松築港 → ことでん 屋島駅 或 JR 屋島駅（約 20–30 分）→ 再上屋島山上。</div>
-            <div class="row">⚠️ <b>屋島山上シャトルバス（接駁巴士）只在週五・六・假日前日運行</b>，<b>Day5 是 10/1 週四沒有</b> → 上山改<b>計程車</b>（屋島駅 → 山上約 10 分、約 ¥1,500–2,000，4 人均分划算），回程同樣計程車下山。（走遍路道上山陡、約 40 分，長輩不建議）</div>
-            <div class="row">山上拝觀＋展望約 1.5–2hr。看完接 B 案骨付鳥晚餐，或直接回岡山。<a href="https://www.google.com/maps/search/屋島山上+獅子の霊巌展望台" target="_blank" rel="noopener">屋島山上地圖↗</a></div>
+          <div class="leg"><div class="when">13:30</div><div class="what"><b>高松城（玉藻公園）</b><small>高松築港站旁步行 2 分；日本三大水城之一、海水堀與和船「玉藻丸」、月見櫓。平坦好走，約 50 分（要趕四國村 16:30 入村截止、別久留；想悠閒也可略過高松城）</small></div></div>
+          <div class="leg t"><div class="when">14:40</div><div class="what">🚃 <span class="rt">JR 高松 → 屋島〔高徳線 約15分〕→ 步行15分 → 四國村</span>　<a href="https://transit.yahoo.co.jp/search/result/高松-屋島" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg"><div class="when">15:10</div><div class="what"><b>四國村ミウゼアム（四國村博物館）</b><small>四國各地 <b>33 棟古民家移築</b>的野外博物館（農村歌舞伎舞台、製糖小屋等），建築＋藝術＋自然，份量足。入村 <span class="yen">¥1,600</span>、約 1.5hr。詳見折疊 ↓</small></div></div>
+          <details class="fold"><summary>四國村：交通・時間・門票</summary><div class="fold-body">
+            <div class="row">JR 高松 →〔高徳線約 15 分〕→ JR 屋島駅 → 步行約 15 分（或計程車數分）即達。</div>
+            <div class="row"><b>9:30–17:00（入村受付 16:30 截止）、週二休</b>（10/1 週四 OK）。入村料：大人 ¥1,600、大學生 ¥1,000、國高中 ¥600、小學以下免費。逛 33 棟移築古民家約 1.5hr；園區在屋島山腳的斜坡地、穿好走的鞋。<a href="https://www.google.com/maps/search/四国村ミウゼアム" target="_blank" rel="noopener">地圖↗</a></div>
           </div></details>
-          <div class="leg"><div class="when">晚餐</div><div class="what"><b>兩種收尾，看當天興致</b><small><b>A · 早回：</b>14:40 高松 →〔マリンライナー 約53分,¥1,660〕→ 岡山 ~15:35，從 <a href="#dinner">岡山站晚餐口袋名單</a> 挑一家。<br><b>B · 留高松吃晚餐：</b>下午逛丸龜町商店街，17:00 吃高松名物 <b>骨付鳥（烤帶骨雞腿）</b>，再搭末班前的マリンライナー回岡山。詳見折疊 ↓　<a href="https://transit.yahoo.co.jp/search/result/高松-岡山" target="_blank" rel="noopener">查班次↗</a></small></div></div>
+          <div class="leg"><div class="when">晚餐</div><div class="what"><b>兩種收尾，看當天興致</b><small><b>A · 早回：</b>四國村後回高松 →〔マリンライナー 約53分,¥1,660〕→ 岡山，從 <a href="#dinner">岡山站晚餐口袋名單</a> 挑一家。<br><b>B · 留高松吃晚餐：</b>四國村約 16:30 逛完 → 回高松約 15–20 分，17:00 吃高松名物 <b>骨付鳥（烤帶骨雞腿）</b>，再搭末班前的マリンライナー回岡山。詳見折疊 ↓　<a href="https://transit.yahoo.co.jp/search/result/高松-岡山" target="_blank" rel="noopener">查班次↗</a></small></div></div>
           <details class="fold"><summary>B 案：留高松吃骨付鳥晚餐（店家＋怎麼接）</summary><div class="fold-body">
-            <div class="row">高松城逛完約 14:30，骨付鳥店多 <b>17:00 才開</b> → 中間下午可逛 <b>丸龜町グリーン（丸龜町綠色商店街，有頂棚拱廊、雨天也行、平坦好走）</b>，或找咖啡歇腳；17:00 開門即吃免排隊。價位為一人含飲料概估。</div>
+            <div class="row">四國村約 16:30 逛完，從 JR 屋島駅回高松約 15–20 分，剛好接骨付鳥（店多 <b>17:00 開</b>、開門即吃免排隊）。價位為一人含飲料概估。</div>
             <div class="tbl-wrap"><table>
               <tr><th>店名（中文）</th><th>類型</th><th>一人約</th><th>為什麼推／注意</th><th>地圖</th></tr>
               <tr><td><b>骨付鳥 寄鳥味鳥</b><br><small>（寄鳥味鳥）</small></td><td>骨付鳥（烤雞腿）</td><td><span class="yen hi">¥2,000–3,000</span></td><td>JR 高松／築港步行 5–6 分、<b>離站最近</b>；17:00–22:00、週一休（10/1 週四 OK）；油脂與辣度較收斂、吃原味</td><td><a href="https://www.google.com/maps/search/骨付鳥+寄鳥味鳥+高松" target="_blank" rel="noopener">地圖↗</a></td></tr>
@@ -458,11 +461,11 @@
             </table></div>
             <div class="row">回程：マリンライナー 高松→岡山<b>末班約 22 時台</b>、班次密，吃完從容回岡山（約 53 分）。出發前用 Yahoo!乗換複查末班。</div>
           </div></details>
-          <p class="note">鷲羽山「看橋」已移到 Day2，這天專心「跨橋」＋高松。<b>想充實下午＝加屋島（壯闊展望＋源平史蹟）再接骨付鳥晚餐晚點回；想輕鬆＝高松城後早回岡山休息</b>，兩種都行。原本刻意留它當 Day4 與 Day6 之間的緩衝，所以不勉強。栗林公園 10 月開園 6:00-17:30。</p>
+          <p class="note">鷲羽山「看橋」已移到 Day2，這天專心「跨橋」＋高松：栗林公園、高松城、四國村一路順。<b>晚餐 A 早回岡山、B 留高松吃骨付鳥晚點回，兩種都行。</b>四國村 16:30 入村截止，高松城別久留；想更鬆也可略過高松城。栗林公園 10 月開園 6:00-17:30。</p>
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day6">
         <div class="day-head">
           <div class="num">06<small>DAY</small></div>
           <div class="day-title"><div class="dt">10 / 2　星期五</div><h3>姬路城</h3></div>
@@ -484,19 +487,21 @@
               <tr><td><b>チャンポン焼／お好み焼き</b><br><small>（鐵板什錦炒・大阪燒）</small></td><td>鐵板燒</td><td><span class="yen">¥1,000–<br>1,500</span></td><td>北口步行 4 分；鐵板現做、份量足</td><td><a href="https://www.google.com/maps/search/姫路駅+お好み焼き+チャンポン焼" target="_blank" rel="noopener">地圖↗</a></td></tr>
             </table></div>
           </div></details>
-          <div class="leg"><div class="when">下午</div><div class="what"><b>（推薦加碼）書寫山圓教寺：西之比叡山、山上千年大伽藍</b><small>姬路後山的天台宗大寺，摩尼殿懸造於岩壁、大講堂等「三之堂」氣勢恢宏（《末代武士》取景地）。纜車上山 4 分、山上拝觀約 2hr。有份量歷史建築＋山林，最合口味。詳見折疊 ↓</small></div></div>
-          <details class="fold"><summary>圓教寺怎麼去＋怎麼接回岡山（含長輩省力法）</summary><div class="fold-body">
-            <div class="row">姬路駅北口（或姬路城大手門前）搭 <b>神姫巴士 10 系統「書写ロープウェイ行」約 30 分</b> → 書写山ロープウェイ（纜車來回 ¥1,000、約4分、8:30–18:00）→ 山上。</div>
-            <div class="row">山上步行至摩尼殿約 15–20 分（緩坡）；<b>長輩可加搭寺方的付費接駁微巴</b>到摩尼殿附近、省腳力。拝觀 ¥500，三之堂＋摩尼殿約 2hr。</div>
-            <div class="row"><b>建議排法</b>：姬路城 9:00 進、<b>好古園略過或快逛</b> → 午餐 → 約 12:30 搭巴士上圓教寺 → 約 15:30 下山回姬路 → 新幹線回岡山 <b>~16:30–17:00</b>。比原本 13:30 就回岡山充實得多。</div>
+          <div class="leg"><div class="when">13:00</div><div class="what"><b>書寫山圓教寺：西之比叡山、山上千年大伽藍</b><small>姬路後山的天台宗大寺，摩尼殿懸造於岩壁、大講堂等「三之堂」氣勢恢宏（《末代武士》取景地）。纜車上山 4 分、山上拝觀約 2hr。詳見折疊 ↓</small></div></div>
+          <details class="fold"><summary>圓教寺：交通・套票・省力法</summary><div class="fold-body">
+            <div class="row">姬路駅北口（或姬路城大手門前）搭 <b>神姫巴士 10 系統「書写ロープウェイ行」約 30 分</b> → 書写山ロープウェイ（纜車約 4 分、8:30–18:00）→ 山上。</div>
+            <div class="row">💴 <b>建議買「書写山ロープウェイセット券 ¥1,700」</b>（含姬路駅⇄書寫山<b>巴士來回＋纜車來回</b>，比分開買省 ¥140；在姬路駅前神姫巴士案內所＝キュエル姫路 1F 買）。再加入山拝觀 ¥500、山上志納所⇄摩尼殿付費微巴來回 ¥500（想省腳力可搭）→ <b>合計約 ¥2,200／人</b>。</div>
+            <div class="row">山上步行至摩尼殿約 15–20 分（緩坡）。三之堂＋摩尼殿約 2hr。</div>
+            <div class="row"><b>建議排法</b>：姬路城 9:00 進、<b>好古園略過或快逛</b> → 午餐 → 約 12:30 搭巴士上圓教寺 → 約 15:30 下山回姬路 → 新幹線回岡山 <b>~16:30–17:00</b>。</div>
+            <div class="row">🔁 <b>輕鬆版備選＝男山配水池公園</b>：姬路城旁登 57.5m 小山（198 階），山頂一覽連立天守、傍晚順光最美；免費、約 1hr。想省事不上書寫山時用這個。<a href="https://www.google.com/maps/search/男山配水池公園+姫路" target="_blank" rel="noopener">地圖↗</a></div>
           </div></details>
-          <div class="leg t"><div class="when">回程</div><div class="what">🚄 <span class="rt">姬路 → 岡山〔山陽新幹線 約20-30分〕：<b>加圓教寺＝約 16:30–17:00 回</b>；不加＝最早 13:30 就能回（岡山下午自由）</span>　<a href="https://transit.yahoo.co.jp/search/result/姫路-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
+          <div class="leg t"><div class="when">~15:40</div><div class="what">🚄 <span class="rt">下山回姬路 → 岡山〔山陽新幹線 約20-30分〕約 16:30–17:00 到岡山</span>　<a href="https://transit.yahoo.co.jp/search/result/姫路-岡山" target="_blank" rel="noopener">查班次↗</a></div></div>
           <div class="leg"><div class="when">晚餐</div><div class="what"><b>回岡山晚餐</b><small>從 <a href="#dinner">岡山站晚餐口袋名單</a> 挑一家</small></div></div>
-          <p class="note">天守閣內樓梯較陡，想省力可只逛外觀與庭園。10 月可能有校外教學，9 點進場最保險。<b>下午加圓教寺＝充實的歷史＋山林半日；想輕鬆＝早回岡山自由活動，兩種都行。</b></p>
+          <p class="note">10 月可能有校外教學，9 點進場最保險。為了挪時間給圓教寺，好古園可略過或快逛。想更輕鬆＝改下方備選的男山（城邊登高看大景）、提早回岡山自由活動。</p>
         </div>
       </article>
 
-      <article class="day reveal">
+      <article class="day reveal" id="day7">
         <div class="day-head">
           <div class="num">07<small>DAY</small></div>
           <div class="day-title"><div class="dt">10 / 3　星期六</div><h3>後樂園 · 回家</h3></div>
@@ -614,7 +619,7 @@
     <ul class="tips">
       <li><span class="ic">🌅</span><div><b>早起換空景</b><small>熱門點（倉敷、姬路城）都排在一開門、人潮湧入前抵達。</small></div></li>
       <li><span class="ic">🛍️</span><div><b>購物排在晚上</b><small>商店街、藥妝開到晚，晚餐後想逛的人可以自由行動。</small></div></li>
-      <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排，對長輩友善。在來線刷 IC 卡（ICOCA／Suica）最方便，不必買 pass（已比過，逐段單買最省）。<b>IC 能刷哪些、新幹線怎麼買、巴士怎麼上車、哪裡只收現金 → 見上方「交通怎麼搭」。</b></small></div></li>
+      <li><span class="ic">🚃</span><div><b>全程大眾運輸</b><small>不租車，動線都以電車＋少量巴士安排、單純好走。在來線刷 IC 卡（ICOCA／Suica）最方便，不必買 pass（已比過，逐段單買最省）。<b>IC 能刷哪些、新幹線怎麼買、巴士怎麼上車、哪裡只收現金 → 見上方「交通怎麼搭」。</b></small></div></li>
       <li><span class="ic">🚕</span><div><b>叫車 App 裝 DiDi（市區再加 GO）</b><small>岡山市區 GO／DiDi 都好用；但只有 <b>DiDi 涵蓋總社市</b>（Day3 備中國分寺那帶），所以裝 DiDi 一個走全程。鄉下景點 App 常叫不到車，<b>去程就請司機等候、原車載回</b>最保險。</small></div></li>
     </ul>
   </section>

@@ -32,6 +32,35 @@
   }
   .wrap{max-width:740px;margin:0 auto;padding:0 22px;}
 
+  /* ---------- top-level navigation ---------- */
+  .site-nav-shell{
+    position:sticky;top:0;z-index:1000;
+    padding:10px 14px;
+    background:rgba(238,240,228,.94);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(12px);
+  }
+  .site-nav{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;max-width:696px;margin:0 auto;
+    padding:4px;border:1px solid var(--line);border-radius:14px;
+    background:rgba(248,249,241,.88);
+  }
+  .site-nav a{
+    min-height:44px;display:flex;align-items:center;justify-content:center;
+    padding:8px 10px;border-radius:10px;
+    color:var(--muted);font-family:var(--label);font-size:14px;font-weight:700;
+    line-height:1.25;text-align:center;text-decoration:none;
+    transition:background-color .18s ease,color .18s ease,box-shadow .18s ease;
+  }
+  .site-nav a:hover{color:var(--sea);background:rgba(44,85,96,.07);}
+  .site-nav a[aria-current="page"]{
+    color:#fff;background:var(--sea);box-shadow:0 3px 12px rgba(44,85,96,.18);
+  }
+  [data-top-view]{scroll-margin-top:82px;}
+  .js [data-top-view]:not(.is-active){display:none;}
+  .anchor-target{display:block;position:relative;top:-82px;visibility:hidden;}
+
   /* ---------- eyebrow / labels ---------- */
   .eyebrow{
     font-family:var(--label);font-size:12px;font-weight:600;
@@ -94,8 +123,8 @@
   .ov .ovlink:hover .t,.ov .ovlink:focus-visible .t{color:var(--accent);}
   .ov .d{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:700;}
   .ov .t{font-weight:600;}
-  .ov .t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;letter-spacing:.04em;font-family:var(--label);margin-top:1px;}
-  .ov .w{font-family:var(--label);font-size:12px;color:var(--muted);letter-spacing:.08em;}
+  .ov .t small{display:block;font-weight:400;color:var(--muted);font-size:14px;letter-spacing:.04em;font-family:var(--label);margin-top:1px;}
+  .ov .w{font-family:var(--label);font-size:14px;color:var(--muted);letter-spacing:.08em;}
 
   /* ---------- open questions ---------- */
   .ask{background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:16px;padding:26px 22px;}
@@ -105,7 +134,7 @@
   .q{padding:16px 0;border-top:1px dashed #E0B8A8;}
   .q:first-of-type{border-top:none;padding-top:4px;}
   .q b{display:block;font-size:16.5px;margin-bottom:3px;}
-  .q span{color:var(--muted);font-size:14.5px;}
+  .q span{color:var(--muted);font-size:16px;}
   .q .pin{color:var(--accent);font-weight:700;}
 
   /* ---------- day timeline ---------- */
@@ -120,7 +149,7 @@
   }
   .num small{display:block;font-family:var(--label);font-size:11px;letter-spacing:.18em;color:var(--accent-2);font-weight:600;margin-top:6px;}
   .day-title{flex:1;}
-  .day-title .dt{font-family:var(--label);font-size:12.5px;letter-spacing:.1em;color:var(--muted);}
+  .day-title .dt{font-family:var(--label);font-size:14px;letter-spacing:.1em;color:var(--muted);}
   .day-title h3{font-family:var(--serif);font-size:23px;font-weight:700;margin:2px 0 0;line-height:1.2;}
   .card{
     background:var(--surface);border:1px solid var(--line);border-radius:14px;
@@ -133,31 +162,31 @@
   }
   .leg .what{flex:1;}
   .leg .what b{font-weight:600;}
-  .leg .what small{display:block;color:var(--muted);font-size:13.5px;margin-top:1px;}
+  .leg .what small{display:block;color:var(--muted);font-size:16px;margin-top:1px;}
   /* transit leg (lighter, with live link) */
   .leg.t{padding-bottom:11px;}
   .leg.t .when{color:var(--accent-2);}
-  .leg.t .what{font-size:13px;color:var(--muted);align-self:center;}
+  .leg.t .what{font-size:16px;color:var(--muted);align-self:center;}
   .leg.t .what .rt{color:var(--text);}
   .leg.t .what a{font-weight:700;color:var(--sea);white-space:nowrap;}
   /* fixed low-frequency warning */
-  .warn{display:flex;gap:9px;align-items:flex-start;background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:10px;padding:10px 13px;margin:0 0 14px 0;font-size:13px;line-height:1.5;}
+  .warn{display:flex;gap:9px;align-items:flex-start;background:var(--peach-wash);border:1px solid #E9C9BC;border-radius:10px;padding:10px 13px;margin:0 0 14px 0;font-size:16px!important;line-height:1.5;}
   .warn .ic{font-size:15px;flex:0 0 auto;}
   .warn b{color:#C2542F;}
   /* collapsible detail attached to a leg (reminders / timetables / fallbacks) */
   .fold{margin:-3px 0 13px 64px;border-left:2px solid var(--line);}
-  .fold>summary{cursor:pointer;list-style:none;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--sea);padding:5px 0 5px 12px;display:flex;align-items:center;gap:7px;}
+  .fold>summary{cursor:pointer;list-style:none;font-family:var(--label);font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--sea);padding:7px 0 7px 12px;display:flex;align-items:center;gap:7px;}
   .fold>summary::-webkit-details-marker{display:none;}
   .fold>summary::before{content:"▸";color:var(--accent-2);font-size:11px;transition:transform .2s ease;}
   .fold[open]>summary::before{transform:rotate(90deg);}
   .fold>summary:hover{color:var(--accent);}
-  .fold-body{padding:1px 0 9px 13px;font-size:13px;line-height:1.62;color:var(--muted);}
+  .fold-body{padding:1px 0 9px 13px;font-size:16px;line-height:1.62;color:var(--muted);}
   .fold-body b{color:var(--text);font-weight:600;}
   .fold-body a{color:var(--sea);font-weight:700;white-space:nowrap;}
   .fold-body .row{margin:0 0 5px;}
-  .fold-body .tt{font-family:var(--label);font-size:12.5px;color:var(--text);background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:7px;padding:7px 10px;margin:4px 0 2px;letter-spacing:.02em;}
+  .fold-body .tt{font-family:var(--label);font-size:16px;color:var(--text);background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:7px;padding:7px 10px;margin:4px 0 2px;letter-spacing:.02em;}
   .fold-body .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:5px 0 7px;border:1px solid var(--line);border-radius:8px;}
-  .fold-body table{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px;background:rgba(255,255,255,.5);}
+  .fold-body table{border-collapse:collapse;width:100%;min-width:560px;font-size:16px;background:rgba(255,255,255,.5);}
   .fold-body th,.fold-body td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;}
   .fold-body th{background:var(--peach-wash);color:var(--text);font-weight:700;white-space:nowrap;}
   .fold-body tr:last-child td{border-bottom:0;}
@@ -169,25 +198,26 @@
   }
   .tag.set{background:#E4EBD2;color:#566B22;}
   .tag.open{background:var(--accent);color:#fff;}
-  .note{font-size:13px;color:var(--muted);margin:0 0 16px;padding-left:13px;border-left:2px solid var(--accent-2);}
+  .note{font-size:16px;color:var(--muted);margin:0 0 16px;padding-left:13px;border-left:2px solid var(--accent-2);}
 
   /* ---------- price tag (red = pricier) ---------- */
   .yen{font-family:var(--label);font-weight:700;color:var(--sea);white-space:nowrap;}
   .yen.hi{color:#C2542F;}
-  .fold-body td .yen{font-size:12.5px;}
+  .fold-body td .yen{font-size:16px;}
 
   /* ---------- candidates ---------- */
   .cand{display:grid;gap:12px;}
   .cand div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
   .cand b{display:block;margin-bottom:2px;}
-  .cand small{color:var(--muted);font-size:14px;}
+  .cand small{color:var(--muted);font-size:16px;}
 
   /* ---------- tips ---------- */
   .tips{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
   .tips li{display:flex;gap:12px;}
   .tips .ic{font-size:18px;line-height:1.4;}
   .tips b{font-weight:600;}
-  .tips small{display:block;color:var(--muted);font-size:14px;}
+  .tips small{display:block;color:var(--muted);font-size:16px;}
+  #dinner table{font-size:16px!important;}
 
   footer{padding:46px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;}
   footer .pill{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:14px;font-family:var(--label);letter-spacing:.06em;}
@@ -196,8 +226,12 @@
 
   /* entrance */
   @media (prefers-reduced-motion:no-preference){
-    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
-    .reveal.in{opacity:1;transform:none;}
+    .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+    .js .reveal.in{opacity:1;transform:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important;}
   }
   :focus-visible{outline:2px solid var(--sea);outline-offset:3px;}
 
@@ -241,7 +275,7 @@
   .mapfold .fold-body{padding-left:13px;}
   .mapwrap{position:relative;}
   .mapstatic{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);}
-  .mapbtn{margin-top:8px;font-family:var(--label);font-size:12.5px;font-weight:700;color:#fff;background:var(--sea);border:none;border-radius:999px;padding:7px 14px;cursor:pointer;letter-spacing:.03em;}
+  .mapbtn{margin-top:8px;font-family:var(--label);font-size:14px;font-weight:700;color:#fff;background:var(--sea);border:none;border-radius:999px;padding:9px 14px;cursor:pointer;letter-spacing:.03em;}
   .mapbtn:hover{background:#21434c;}
   .mapint{width:100%;height:380px;border-radius:10px;border:1px solid var(--line);overflow:hidden;}
   .mapint-lg{height:clamp(340px,62vh,560px);}
@@ -253,6 +287,7 @@
   .maplegend .lg-l em{color:var(--muted);font-style:normal;font-size:11px;}
   .leaflet-container{font-family:var(--sans);}
 </style>
+<script>document.documentElement.classList.add('js');</script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -275,7 +310,17 @@
   </div>
 </header>
 
+<div class="site-nav-shell">
+  <nav class="site-nav" aria-label="主要內容">
+    <a id="nav-itinerary" href="#itinerary" aria-current="page">行程</a>
+    <a id="nav-before-trip" href="#before-trip">出發前</a>
+    <a id="nav-planning" href="#planning">規劃／查證</a>
+  </nav>
+</div>
+
 <div class="wrap">
+
+  <main id="itinerary" class="top-view is-active" data-top-view aria-labelledby="nav-itinerary">
 
   <section aria-label="行程總覽">
     <div class="sec-head">
@@ -689,7 +734,10 @@
     <p class="note">想吃名物炸豬排丼＝回 Day1 的元祖デミカツ丼；想最省事＝站直結的牛かつ上村／おむや；想小酌＝炭 軍司。挑哪家看當晚體力與心情。</p>
   </section>
 
-  <section id="todo" aria-label="出發前待辦與待決定">
+  </main>
+
+  <section id="before-trip" class="top-view" data-top-view aria-labelledby="nav-before-trip">
+    <span id="todo" class="anchor-target" aria-hidden="true"></span>
     <div class="sec-head">
       <p class="eyebrow">Before you go</p>
       <h2>出發前要訂 &amp; 一起決定的事</h2>
@@ -716,6 +764,8 @@
     </div>
     <p class="note">🗣️ 還能一起喬的：Day5 高松城已降為選配；若想更輕鬆，可在四國村後直接回岡山、略過骨付鳥。其他各天的現場彈性都寫在當天行程的折疊裡。</p>
   </section>
+
+  <div id="planning" class="top-view" data-top-view role="region" aria-labelledby="nav-planning">
 
   <section aria-label="交通須知">
     <div class="sec-head">
@@ -772,6 +822,8 @@
     </ul>
   </section>
 
+  </div>
+
   <footer>
     <span class="pill">DRAFT · 會持續更新</span>
     <p>這是討論用草稿，內容還會調整。<br>有任何想法、想去的地方，都歡迎提出來一起喬。</p>
@@ -792,6 +844,46 @@
 
 </div>
 
+<script>
+(function(){
+  var views=[].slice.call(document.querySelectorAll('[data-top-view]'));
+  var links=[].slice.call(document.querySelectorAll('.site-nav a'));
+  var topHashes=links.map(function(link){return link.getAttribute('href');});
+
+  function selectedView(){
+    var hash=window.location.hash;
+    var direct=topHashes.indexOf(hash)!==-1 ? document.querySelector(hash) : null;
+    if(direct) return direct;
+    if(hash){
+      try{
+        var target=document.querySelector(hash);
+        var owner=target&&target.closest('[data-top-view]');
+        if(owner) return owner;
+      }catch(_error){}
+    }
+    return document.getElementById('itinerary');
+  }
+
+  function activateView(){
+    var active=selectedView();
+    views.forEach(function(view){
+      var selected=view===active;
+      view.classList.toggle('is-active',selected);
+      if(selected) view.removeAttribute('aria-hidden');
+      else view.setAttribute('aria-hidden','true');
+    });
+    links.forEach(function(link){
+      var selected=link.getAttribute('href')==='#'+active.id;
+      if(selected) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+    requestAnimationFrame(function(){window.dispatchEvent(new Event('resize'));});
+  }
+
+  window.addEventListener('hashchange',activateView);
+  activateView();
+})();
+</script>
 <script>
 (function(){
   /* ---- Seto Inland Sea hero backdrop ---- */

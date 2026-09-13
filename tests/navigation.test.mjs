@@ -22,7 +22,7 @@ async function waitFor(predicate, message, timeoutMs = 8_000) {
   throw new Error(message);
 }
 
-async function openBrowser(url, { javascript = true, now } = {}) {
+async function openBrowser(url, { javascript = true, now, beforeLoadSource } = {}) {
   assert.ok(existsSync(chromePath), `Chrome not found at ${chromePath}`);
   const profileDir = await mkdtemp(path.join(os.tmpdir(), 'okayama-nav-test-'));
   const chrome = spawn(chromePath, [
@@ -79,6 +79,9 @@ async function openBrowser(url, { javascript = true, now } = {}) {
       }`,
     }, sessionId);
   }
+  if (beforeLoadSource) {
+    await send('Page.addScriptToEvaluateOnNewDocument', { source: beforeLoadSource }, sessionId);
+  }
   if (!javascript) {
     await send('Emulation.setScriptExecutionDisabled', { value: true }, sessionId);
   }
@@ -102,9 +105,21 @@ async function openBrowser(url, { javascript = true, now } = {}) {
     setViewport: (width, height) => send('Emulation.setDeviceMetricsOverride', {
       width, height, deviceScaleFactor: 1, mobile: width < 600,
     }, sessionId),
+    setReducedMotion: () => send('Emulation.setEmulatedMedia', {
+      features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],
+    }, sessionId),
     press: async (key) => {
       await send('Input.dispatchKeyEvent', { type: 'keyDown', key }, sessionId);
       await send('Input.dispatchKeyEvent', { type: 'keyUp', key }, sessionId);
+    },
+    reload: async () => {
+      await send('Page.reload', { ignoreCache: true }, sessionId);
+      await waitFor(
+        async () => {
+          try { return await evaluate("document.readyState === 'complete'"); } catch { return false; }
+        },
+        'Page did not finish reloading',
+      );
     },
     close: async () => {
       try { await send('Target.closeTarget', { targetId }); } catch {}
@@ -224,6 +239,207 @@ test('planning view organizes current rationale and traceable evidence without e
   assert.equal(state.restaurantsInPlanning, true);
   assert.equal(state.itineraryHasFullMap, false);
   assert.doesNotMatch(state.text, /原本建議|取消這個建議|AI 更正|更正流水帳/);
+});
+
+test('local rehearsal offers only movable themes and previews a theme-to-date swap', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('[data-rehearsal]') !== null`),
+    'Local rehearsal controls were not available',
+  );
+  const initial = await browser.evaluate(`JSON.stringify({
+    labels: [...document.querySelectorAll('[data-rehearsal] select')].map((select) =>
+      [...select.options].filter((option) => option.value).map((option) => option.textContent.trim())
+    ),
+    fixedThemes: document.querySelector('[data-rehearsal]').innerText,
+    confirmDisabled: document.querySelector('[data-rehearsal-confirm]').disabled,
+  })`).then(JSON.parse);
+
+  const expectedThemes = ['児島半島日', '倉敷 × 吉備路', '跨瀨戶大橋 × 高松', '姫路城'];
+  assert.deepEqual(initial.labels[0].map((label) => expectedThemes.find((theme) => label.startsWith(theme))), expectedThemes);
+  assert.deepEqual(initial.labels[1].map((label) => expectedThemes.find((theme) => label.startsWith(theme))), expectedThemes);
+  assert.ok(initial.labels.flat().every((label) => /目前\s*(9\/28|9\/29|10\/1|10\/2)/.test(label)));
+  assert.doesNotMatch(initial.fixedThemes, /抵達 · 岡山夜色.*目前|豊島 · 藝術跳島.*目前|後樂園 · 回家.*目前/);
+  assert.equal(initial.confirmDisabled, true);
+
+  await browser.evaluate(`{
+    const selects = document.querySelectorAll('[data-rehearsal] select');
+    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('児島半島日')).value;
+    selects[0].dispatchEvent(new Event('change', { bubbles: true }));
+    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('跨瀨戶大橋 × 高松')).value;
+    selects[1].dispatchEvent(new Event('change', { bubbles: true }));
+  }`);
+  const preview = await browser.evaluate(`document.querySelector('[data-rehearsal-preview]').innerText`);
+  assert.match(preview, /児島半島日.*10\/1/);
+  assert.match(preview, /跨瀨戶大橋 × 高松.*9\/28/);
+  assert.equal(await browser.evaluate(`document.querySelector('[data-rehearsal-confirm]').disabled`), false);
+});
+
+test('confirming a rehearsal keeps fixed date slots and moves every theme presentation together', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+
+  await browser.evaluate(`{
+    const selects = document.querySelectorAll('[data-rehearsal] select');
+    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('児島半島日')).value;
+    selects[0].dispatchEvent(new Event('change', { bubbles: true }));
+    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('跨瀨戶大橋 × 高松')).value;
+    selects[1].dispatchEvent(new Event('change', { bubbles: true }));
+    document.querySelector('[data-rehearsal-confirm]').click();
+  }`);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText.includes('本裝置自訂順序')`),
+    'Custom order status was not announced',
+  );
+  await browser.evaluate(`location.hash = '#day2'`);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#day2.is-active-day')?.dataset.title === '跨瀨戶大橋 × 高松'`),
+    'Day 2 did not receive the Takamatsu theme',
+  );
+
+  const state = await browser.evaluate(`JSON.stringify({
+    slots: [...document.querySelectorAll('.day')].map((day) => ({ id: day.id, date: day.dataset.date })),
+    overviewDay2: document.querySelector('.ov a[href="#day2"] .t').innerText,
+    pickerDay2: document.querySelector('.day-picker a[href="#day2"]').innerText,
+    summary: document.querySelector('.day-summary').innerText,
+    detail: document.querySelector('#day2').innerText,
+    mapDescription: document.querySelector('#day2 .mapstatic').alt,
+    fixedDay4: document.querySelector('#day4').dataset.title,
+    customBanner: document.querySelector('[data-custom-order-banner]').innerText,
+  })`).then(JSON.parse);
+
+  assert.deepEqual(state.slots.map(({ id }) => id), ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7']);
+  assert.deepEqual(state.slots.map(({ date }) => date), [
+    '2026-09-27', '2026-09-28', '2026-09-29', '2026-09-30', '2026-10-01', '2026-10-02', '2026-10-03',
+  ]);
+  assert.match(state.overviewDay2, /跨瀨戶大橋 × 高松/);
+  assert.match(state.pickerDay2, /跨瀨戶大橋 × 高松/);
+  assert.match(state.summary, /9 \/ 28.*跨瀨戶大橋 × 高松/s);
+  assert.match(state.summary, /需複查.*班次.*營業時間.*休館日.*賽程.*日期限定預約/s);
+  assert.match(state.detail, /栗林公園/);
+  assert.doesNotMatch(state.detail, /鷲羽山觀瀨戶大橋/);
+  assert.match(state.mapDescription, /跨瀨戶大橋與高松/);
+  assert.match(state.detail, /需複查.*沒有自動重新查證/s);
+  assert.equal(state.fixedDay4, '豊島 · 藝術跳島');
+  assert.match(state.customBanner, /本裝置自訂順序/);
+});
+
+test('a custom order survives reload and restoring the published version clears it', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+
+  await browser.evaluate(`{
+    const selects = document.querySelectorAll('[data-rehearsal] select');
+    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('倉敷 × 吉備路')).value;
+    selects[0].dispatchEvent(new Event('change', { bubbles: true }));
+    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('姫路城')).value;
+    selects[1].dispatchEvent(new Event('change', { bubbles: true }));
+    document.querySelector('[data-rehearsal-confirm]').click();
+  }`);
+  assert.notEqual(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v1')`), null);
+
+  await browser.reload();
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '姫路城'`),
+    'Saved theme mapping was not restored after reload',
+  );
+  assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`), /本裝置自訂順序/);
+  assert.match(await browser.evaluate(`document.querySelector('.day-summary').innerText`), /本裝置自訂順序/);
+
+  await browser.evaluate(`document.querySelector('[data-rehearsal-reset]').click()`);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '倉敷 × 吉備路'`),
+    'Published mapping was not restored',
+  );
+  assert.equal(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v1')`), null);
+  assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`), /目前為發布順序/);
+  assert.equal(await browser.evaluate(`document.querySelector('[data-custom-order-banner]').hidden`), true);
+});
+
+test('a storage write failure keeps the current swap usable and explains that it will not persist', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`, {
+    beforeLoadSource: `Storage.prototype.setItem = function () { throw new DOMException('blocked', 'SecurityError'); };`,
+  });
+  t.after(() => browser.close());
+
+  await browser.evaluate(`{
+    const selects = document.querySelectorAll('[data-rehearsal] select');
+    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('児島半島日')).value;
+    selects[0].dispatchEvent(new Event('change', { bubbles: true }));
+    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('倉敷 × 吉備路')).value;
+    selects[1].dispatchEvent(new Event('change', { bubbles: true }));
+    document.querySelector('[data-rehearsal-confirm]').click();
+  }`);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#day2')?.dataset.title === '倉敷 × 吉備路'`),
+    'In-memory swap did not survive a storage failure',
+  );
+  const status = await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`);
+  assert.match(status, /本機儲存寫入失敗/);
+  assert.match(status, /下次開啟不會保留/);
+  assert.match(status, /本裝置自訂順序/);
+});
+
+test('rehearsal remains keyboard-operable, announced, and usable on a zoomed mobile layout', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+  await browser.setViewport(390, 844);
+  await browser.setReducedMotion();
+
+  assert.equal(
+    await browser.evaluate(`matchMedia('(prefers-reduced-motion: reduce)').matches`),
+    true,
+  );
+  await browser.evaluate(`document.querySelector('[data-rehearsal-first]').focus()`);
+  await browser.press('ArrowDown');
+  await browser.evaluate(`document.querySelector('[data-rehearsal-second]').focus()`);
+  await browser.press('ArrowDown');
+  await browser.press('ArrowDown');
+  await waitFor(
+    () => browser.evaluate(`!document.querySelector('[data-rehearsal-confirm]').disabled`),
+    'Keyboard selection did not produce a valid preview',
+  );
+  assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-preview]').innerText`), /交換後/);
+
+  await browser.evaluate(`document.querySelector('[data-rehearsal-confirm]').focus()`);
+  await browser.press(' ');
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText.includes('本裝置自訂順序')`),
+    'Keyboard confirmation did not announce the custom order',
+  );
+  const semantics = await browser.evaluate(`JSON.stringify({
+    previewLive: document.querySelector('[data-rehearsal-preview]').getAttribute('aria-live'),
+    statusRole: document.querySelector('[data-rehearsal-status]').getAttribute('role'),
+    bannerRole: document.querySelector('[data-custom-order-banner]').getAttribute('role'),
+    selectHeight: document.querySelector('[data-rehearsal-first]').getBoundingClientRect().height,
+    confirmHeight: document.querySelector('[data-rehearsal-confirm]').getBoundingClientRect().height,
+    fields: getComputedStyle(document.querySelector('.rehearsal-fields')).gridTemplateColumns.split(' ').length,
+  })`).then(JSON.parse);
+  assert.equal(semantics.previewLive, 'polite');
+  assert.equal(semantics.statusRole, 'status');
+  assert.equal(semantics.bannerRole, 'status');
+  assert.ok(semantics.selectHeight >= 44);
+  assert.ok(semantics.confirmHeight >= 44);
+  assert.equal(semantics.fields, 1);
+
+  await browser.evaluate(`document.documentElement.style.zoom = '2'`);
+  const zoomed = await browser.evaluate(`JSON.stringify({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+    controlsVisible: [...document.querySelectorAll('[data-rehearsal] select, [data-rehearsal] button')]
+      .every((el) => el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0),
+  })`).then(JSON.parse);
+  assert.equal(zoomed.content, zoomed.viewport);
+  assert.equal(zoomed.controlsVisible, true);
+
+  await browser.evaluate(`document.querySelector('[data-rehearsal-reset]').focus()`);
+  await browser.press(' ');
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText.includes('目前為發布順序')`),
+    'Keyboard reset did not restore the published order',
+  );
 });
 
 test('pre-trip and planning controls stay keyboard-usable and stack as cards on mobile', async (t) => {

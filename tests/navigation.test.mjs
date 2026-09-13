@@ -598,6 +598,7 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
   );
   const state = await browser.evaluate(`JSON.stringify({
     labels: [...document.querySelectorAll('[aria-label="選擇行程日"] a')].map((el) => el.textContent.replace(/\\s+/g, ' ').trim()),
+    topics: [...document.querySelectorAll('[aria-label="選擇行程日"] a')].map((el) => el.querySelector('.picker-topic')?.innerText.trim() || ''),
     visibleDays: [...document.querySelectorAll('.day')]
       .filter((el) => getComputedStyle(el).display !== 'none')
       .map((el) => el.id),
@@ -608,6 +609,15 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
   assert.equal(state.labels.length, 7);
   assert.match(state.labels[0], /Day 1.*9\/27/);
   assert.match(state.labels[6], /Day 7.*10\/3/);
+  assert.deepEqual(state.topics, [
+    '抵達 · 岡山夜色',
+    '児島半島日',
+    '倉敷 × 吉備路',
+    '豊島 · 藝術跳島',
+    '跨瀨戶大橋 × 高松',
+    '姫路城',
+    '岡山後楽園 · 回家',
+  ]);
   assert.deepEqual(state.visibleDays, ['day4']);
   assert.ok(state.scrollY > 0, 'A Day fragment should move the selected day into view');
   for (const text of ['9 / 30', '豊島 · 藝術跳島', '07:05', '17:55', '08:40', '10:30', '16:25']) {

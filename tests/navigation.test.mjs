@@ -153,6 +153,158 @@ test('core itinerary and pre-trip content are visibly rendered when JavaScript i
   });
 });
 
+test('pre-trip view prioritizes dated actions and keeps completed records collapsed', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#before-trip`);
+  t.after(() => browser.close());
+
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#before-trip.is-active') !== null`),
+    'Pre-trip view did not become active',
+  );
+  const state = await browser.evaluate(`JSON.stringify({
+    actions: [...document.querySelectorAll('#before-trip [data-pretrip-list] > .action-card')].map((card) => ({
+      status: card.querySelector('[data-field="status"]')?.textContent.trim(),
+      deadline: card.querySelector('time')?.getAttribute('datetime'),
+      text: card.innerText,
+    })),
+    completedOpen: document.querySelector('#completed-pretrip')?.open,
+    completedText: document.querySelector('#completed-pretrip')?.textContent,
+    publicText: document.querySelector('#before-trip')?.innerText,
+  })`).then(JSON.parse);
+
+  assert.deepEqual(state.actions.map(({ deadline }) => deadline), [
+    '2026-09-20',
+    '2026-09-26',
+    '2026-09-27',
+  ]);
+  assert.deepEqual(state.actions.map(({ status }) => status), ['需複查', '待處理', '待處理']);
+  for (const action of state.actions) {
+    assert.match(action.text, /下一個動作/);
+    assert.match(action.text, /完成條件/);
+  }
+  assert.equal(state.completedOpen, false);
+  assert.match(state.completedText, /豊島美術館.*已完成/);
+  assert.doesNotMatch(state.publicText, /原本建議|取消這個建議|AI 更正|更正流水帳/);
+});
+
+test('planning view organizes current rationale and traceable evidence without edit history', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#planning.is-active') !== null`),
+    'Planning view did not become active',
+  );
+  const state = await browser.evaluate(`JSON.stringify({
+    planningDays: [...document.querySelectorAll('#planning [data-planning-day]')].map((el) => el.getAttribute('data-planning-day')),
+    commonTopics: [...document.querySelectorAll('#planning [data-common-topic]')].map((el) => el.getAttribute('data-common-topic')),
+    evidence: [...document.querySelectorAll('#planning details.planning-source')].map((el) => ({
+      open: el.open,
+      summary: el.querySelector('summary')?.innerText,
+      links: [...el.querySelectorAll('.fold-body a[href^="http"]')].length,
+    })),
+    estimate: document.querySelector('#planning .estimate')?.innerText,
+    mapInPlanning: document.querySelector('#planning #mapall') !== null,
+    restaurantsInPlanning: document.querySelector('#planning #restaurants .restaurant-grid') !== null,
+    itineraryHasFullMap: document.querySelector('#itinerary #mapall') !== null,
+    text: document.querySelector('#planning')?.innerText,
+  })`).then(JSON.parse);
+
+  assert.deepEqual(state.planningDays, ['1', '2', '3', '4', '5', '6', '7']);
+  assert.deepEqual(state.commonTopics, ['transport', 'restaurants', 'tickets']);
+  assert.ok(state.evidence.length >= 3);
+  for (const item of state.evidence) {
+    assert.equal(item.open, false);
+    assert.match(item.summary, /已查證 2026-\d{2}-\d{2}/);
+    assert.ok(item.links > 0, `${item.summary} should link to an external source`);
+  }
+  assert.match(state.estimate, /推估/);
+  assert.match(state.estimate, /推定|可能|約/);
+  assert.equal(state.mapInPlanning, true);
+  assert.equal(state.restaurantsInPlanning, true);
+  assert.equal(state.itineraryHasFullMap, false);
+  assert.doesNotMatch(state.text, /原本建議|取消這個建議|AI 更正|更正流水帳/);
+});
+
+test('pre-trip and planning controls stay keyboard-usable and stack as cards on mobile', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+  await browser.setViewport(390, 844);
+
+  const mobile = await browser.evaluate(`JSON.stringify({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+    restaurantColumns: getComputedStyle(document.querySelector('.restaurant-grid')).gridTemplateColumns.split(' ').length,
+    dayColumns: getComputedStyle(document.querySelector('.planning-day-grid')).gridTemplateColumns.split(' ').length,
+    restaurantTables: document.querySelectorAll('#planning #restaurants table').length,
+    summaryTarget: document.querySelector('.planning-day > summary').getBoundingClientRect().height,
+  })`).then(JSON.parse);
+
+  assert.equal(mobile.content, mobile.viewport);
+  assert.equal(mobile.restaurantColumns, 1);
+  assert.equal(mobile.dayColumns, 1);
+  assert.equal(mobile.restaurantTables, 0);
+  assert.ok(mobile.summaryTarget >= 44);
+
+  await browser.evaluate(`document.querySelector('.planning-day > summary').focus()`);
+  await browser.press(' ');
+  assert.equal(await browser.evaluate(`document.querySelector('.planning-day').open`), true);
+
+  await browser.evaluate(`document.querySelector('.site-nav a[href="#before-trip"]').focus()`);
+  await browser.press('Enter');
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#before-trip.is-active') !== null`),
+    'Keyboard could not reach the pre-trip view',
+  );
+  await browser.evaluate(`document.querySelector('#completed-pretrip > summary').focus()`);
+  await browser.press(' ');
+  assert.equal(await browser.evaluate(`document.querySelector('#completed-pretrip').open`), true);
+});
+
+test('returning to a visible planning map requests a complete redraw', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#planning`);
+  t.after(() => browser.close());
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#planning.is-active') !== null`),
+    'Planning view did not become active',
+  );
+
+  await browser.evaluate(`{
+    window.__overviewInvalidations = 0;
+    document.querySelector('#mapall')._map = {
+      invalidateSize() { window.__overviewInvalidations += 1; }
+    };
+    location.hash = '#itinerary';
+  }`);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#itinerary.is-active') !== null`),
+    'Itinerary view did not become active',
+  );
+  await browser.evaluate(`location.hash = '#planning'`);
+  await waitFor(
+    () => browser.evaluate(`window.__overviewInvalidations > 0`),
+    'Visible overview map was not invalidated after returning to planning',
+  );
+});
+
+test('a direct planning subsection link reveals and positions its content', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#restaurants`);
+  t.after(() => browser.close());
+
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#planning.is-active') !== null`),
+    'Planning view did not become active for a subsection link',
+  );
+  const state = await browser.evaluate(`JSON.stringify({
+    current: document.querySelector('.site-nav a[aria-current="page"]')?.getAttribute('href'),
+    top: document.querySelector('#restaurants').getBoundingClientRect().top,
+    scrollY,
+  })`).then(JSON.parse);
+  assert.equal(state.current, '#planning');
+  assert.ok(state.scrollY > 0);
+  assert.ok(state.top >= 55 && state.top <= 100, `Restaurant section top was ${state.top}px`);
+});
+
 test('direct fragment, navigation clicks, and browser Back keep the correct region visible', async (t) => {
   const pageUrl = `${pathToFileURL(htmlPath).href}#before-trip`;
   const browser = await openBrowser(pageUrl);

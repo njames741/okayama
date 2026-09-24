@@ -658,7 +658,7 @@ test('active day exposes journey stages and keeps semantic priority visible', as
     verified: document.querySelector('#day4 .verified')?.innerText,
     estimate: document.querySelector('#day4 .estimate')?.innerText,
     supplementsClosed: [...document.querySelectorAll('.leg-more')].every((el) => !el.open),
-    verifiedTimetable: document.querySelector('#day2 .verified-detail > summary')?.innerText,
+    day2Verified: [...document.querySelectorAll('#day2 .verified-detail > summary')].map((el) => el.innerText),
     day5ReturnTimes: [...document.querySelectorAll('#day5 .journey-stage[aria-label="回程"] .when')].map((el) => el.innerText),
     day5DinnerStage: document.querySelector('#day5 .when') && [...document.querySelectorAll('#day5 .when')]
       .find((el) => el.innerText === '17:30')?.closest('.journey-stage')?.getAttribute('aria-label'),
@@ -676,7 +676,8 @@ test('active day exposes journey stages and keeps semantic priority visible', as
   assert.match(semantics.verified, /已查證.*2026-/);
   assert.match(semantics.estimate, /推估/);
   assert.equal(semantics.supplementsClosed, true);
-  assert.match(semantics.verifiedTimetable, /已查證 2026-08-29/);
+  assert.ok(semantics.day2Verified.some((value) => /競艇場接駁.*2026-09-24 查證/.test(value)));
+  assert.ok(semantics.day2Verified.some((value) => /已查證 2026-08-29/.test(value)));
   assert.deepEqual(semantics.day5ReturnTimes, ['~19:30']);
   assert.equal(semantics.day5DinnerStage, '下午行程');
 });

@@ -588,6 +588,18 @@ test('an empty fragment defaults to the itinerary region', async (t) => {
   }
 });
 
+test('Day 4 restaurant link opens the visible restaurant list', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#day4`);
+  t.after(() => browser.close());
+
+  await browser.evaluate(`document.querySelector('#day4 a[href="#restaurants"]').click()`);
+  await waitFor(
+    () => browser.evaluate(`location.hash === '#restaurants' && document.querySelector('#planning.is-active') !== null`),
+    'Restaurant link did not open planning',
+  );
+  assert.equal(await browser.evaluate(`getComputedStyle(document.querySelector('#restaurants')).display !== 'none'`), true);
+});
+
 test('day selector keeps fixed dates and shows one requested itinerary day', async (t) => {
   const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#day4`);
   t.after(() => browser.close());

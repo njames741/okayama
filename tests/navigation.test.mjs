@@ -673,7 +673,7 @@ test('active day exposes journey stages and keeps semantic priority visible', as
     day2Verified: [...document.querySelectorAll('#day2 .verified-detail > summary')].map((el) => el.innerText),
     day5ReturnTimes: [...document.querySelectorAll('#day5 .journey-stage[aria-label="回程"] .when')].map((el) => el.innerText),
     day5DinnerStage: document.querySelector('#day5 .when') && [...document.querySelectorAll('#day5 .when')]
-      .find((el) => el.innerText === '17:30')?.closest('.journey-stage')?.getAttribute('aria-label'),
+      .find((el) => el.innerText === '~17:20')?.closest('.journey-stage')?.getAttribute('aria-label'),
   })`).then(JSON.parse);
 
   for (const stage of ['去程', '主要行程', '午餐', '下午行程', '回程']) {
@@ -690,7 +690,7 @@ test('active day exposes journey stages and keeps semantic priority visible', as
   assert.equal(semantics.supplementsClosed, true);
   assert.ok(semantics.day2Verified.some((value) => /競艇場接駁.*2026-09-24 查證/.test(value)));
   assert.ok(semantics.day2Verified.some((value) => /已查證 2026-08-29/.test(value)));
-  assert.deepEqual(semantics.day5ReturnTimes, ['~19:30']);
+  assert.deepEqual(semantics.day5ReturnTimes, ['19:40']);
   assert.equal(semantics.day5DinnerStage, '下午行程');
 });
 

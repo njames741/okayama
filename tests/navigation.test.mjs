@@ -716,11 +716,14 @@ test('day layout is sticky and two-column on desktop, then readable without over
     viewport: document.documentElement.clientWidth,
     content: document.documentElement.scrollWidth,
     dayTarget: document.querySelector('.day-picker a').getBoundingClientRect().height,
+    fixedNavHeight: document.querySelector('.site-nav-shell').getBoundingClientRect().height
+      + document.querySelector('.day-picker').getBoundingClientRect().height,
     choiceColumns: getComputedStyle(document.querySelector('.choice-grid')).gridTemplateColumns.split(' ').length,
   })`).then(JSON.parse);
   assert.equal(mobile.columns, 1);
   assert.equal(mobile.content, mobile.viewport);
   assert.ok(mobile.dayTarget >= 44);
+  assert.ok(mobile.fixedNavHeight <= 125, `Mobile navigation is too tall: ${mobile.fixedNavHeight}px`);
   assert.equal(mobile.choiceColumns, 1);
   const reading = await browser.evaluate(`(() => {
     const day = document.querySelector('#day4');
@@ -779,7 +782,10 @@ test('day layout is sticky and two-column on desktop, then readable without over
     content: document.documentElement.scrollWidth,
     pickerTop: document.querySelector('.day-picker').getBoundingClientRect().top,
     navBottom: document.querySelector('.site-nav-shell').getBoundingClientRect().bottom,
+    fixedNavHeight: document.querySelector('.site-nav-shell').getBoundingClientRect().height
+      + document.querySelector('.day-picker').getBoundingClientRect().height,
   })`).then(JSON.parse);
   assert.equal(narrow.content, narrow.viewport);
+  assert.ok(narrow.fixedNavHeight <= 130, `Narrow phone navigation is too tall: ${narrow.fixedNavHeight}px`);
   assert.ok(narrow.pickerTop >= narrow.navBottom - 2, `Narrow phone navigation should not overlap: ${JSON.stringify(narrow)}`);
 });

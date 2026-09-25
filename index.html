@@ -416,16 +416,27 @@
   }
   .js .day .daypic{display:none;}
   @media (max-width:899px){
+    .site-nav-shell{padding:4px 12px;}
+    .site-nav{gap:4px;padding:2px;}
+    .site-nav a{padding:6px;}
     .day-rail{display:contents;}
     .day-picker{
       position:sticky;top:var(--site-nav-height,83px);z-index:20;
-      margin-inline:-22px;padding:8px 22px 10px;
+      margin-inline:-22px;padding:4px 22px 5px;
       background:rgba(238,240,228,.97);
       border-bottom:1px solid var(--line);
       backdrop-filter:blur(12px);
     }
-    .day-picker a{min-height:44px;}
-    .day{scroll-margin-top:190px;}
+    .day-picker a{
+      position:relative;display:flex;align-items:center;gap:5px;
+      min-height:44px;padding:0 12px;border-radius:999px;white-space:nowrap;
+    }
+    .day-picker small{display:inline;}
+    .day-picker .picker-topic{
+      display:block;min-width:0;max-width:7em;overflow:hidden;
+      text-overflow:ellipsis;white-space:nowrap;font-weight:500;
+    }
+    .day{scroll-margin-top:130px;}
     .day-summary{min-height:0;}
     .topic-grid{grid-template-columns:1fr;}
   }

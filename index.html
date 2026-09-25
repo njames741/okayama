@@ -416,6 +416,16 @@
   }
   .js .day .daypic{display:none;}
   @media (max-width:899px){
+    .day-rail{display:contents;}
+    .day-picker{
+      position:sticky;top:var(--site-nav-height,83px);z-index:20;
+      margin-inline:-22px;padding:8px 22px 10px;
+      background:rgba(238,240,228,.97);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(12px);
+    }
+    .day-picker a{min-height:44px;}
+    .day{scroll-margin-top:190px;}
     .day-summary{min-height:0;}
     .topic-grid{grid-template-columns:1fr;}
   }
@@ -425,7 +435,7 @@
     .planning-day-grid,.restaurant-grid{grid-template-columns:1fr;}
     .wrap{padding-inline:16px;}
     .summary-times{grid-template-columns:1fr 1fr;}
-    .day-picker{margin-inline:-3px;}
+    .day-picker{margin-inline:-16px;padding-inline:16px;}
     .choice-grid{grid-template-columns:1fr;}
     .rehearsal-fields{grid-template-columns:1fr;}
   }
@@ -979,6 +989,14 @@
   var topHashes=links.map(function(link){return link.getAttribute('href');});
   var days=[].slice.call(document.querySelectorAll('.day'));
   var dayLinks=[].slice.call(document.querySelectorAll('.day-picker a'));
+  var dayPicker=document.querySelector('.day-picker');
+  var siteNavShell=document.querySelector('.site-nav-shell');
+  function syncSiteNavHeight(){
+    document.documentElement.style.setProperty('--site-nav-height',siteNavShell.getBoundingClientRect().height+'px');
+  }
+  syncSiteNavHeight();
+  if('ResizeObserver' in window) new ResizeObserver(syncSiteNavHeight).observe(siteNavShell);
+  else window.addEventListener('resize',syncSiteNavHeight);
   var daySummary=document.querySelector('.day-summary');
   var rehearsal=document.querySelector('[data-rehearsal]');
   var rehearsalSlots=['day2','day3','day5','day6'];
@@ -1356,10 +1374,23 @@
       if(link.getAttribute('href')==='#'+active.id) link.setAttribute('aria-current','date');
       else link.removeAttribute('aria-current');
     });
+    if(dayPicker&&window.innerWidth<900){
+      var selectedLink=dayLinks.find(function(link){return link.getAttribute('href')==='#'+active.id;});
+      if(selectedLink){
+        var left=selectedLink.getBoundingClientRect().left-dayPicker.getBoundingClientRect().left
+          +dayPicker.scrollLeft-(dayPicker.clientWidth-selectedLink.clientWidth)/2;
+        dayPicker.scrollTo({left:left,behavior:'instant'});
+      }
+    }
     fillSummary(active);
     if(window.location.hash==='#'+active.id){
-      var top=active.getBoundingClientRect().top+window.scrollY-84;
-      window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+      requestAnimationFrame(function(){
+        if(window.location.hash!=='#'+active.id) return;
+        var navHeight=siteNavShell.getBoundingClientRect().height;
+        var pickerHeight=window.innerWidth<900&&dayPicker?dayPicker.getBoundingClientRect().height:0;
+        var top=active.getBoundingClientRect().top+window.scrollY-navHeight-pickerHeight-8;
+        window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+      });
     }
   }
 

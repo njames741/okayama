@@ -722,6 +722,15 @@ test('day layout is sticky and two-column on desktop, then readable without over
   assert.equal(mobile.content, mobile.viewport);
   assert.ok(mobile.dayTarget >= 44);
   assert.equal(mobile.choiceColumns, 1);
+  const reading = await browser.evaluate(`(() => {
+    const day = document.querySelector('#day4');
+    window.scrollTo(0, day.getBoundingClientRect().top + window.scrollY + 450);
+    const picker = document.querySelector('.day-picker').getBoundingClientRect();
+    const nav = document.querySelector('.site-nav-shell').getBoundingClientRect();
+    return JSON.stringify({ pickerTop: picker.top, navBottom: nav.bottom, pickerBottom: picker.bottom, viewportHeight: innerHeight });
+  })()`).then(JSON.parse);
+  assert.ok(reading.pickerTop >= reading.navBottom - 2, 'Date picker should stay below the main navigation while reading');
+  assert.ok(reading.pickerBottom < reading.viewportHeight, 'Date picker should remain in view while reading');
   for (const selector of [
     '.day-picker small',
     '.summary-date',
@@ -743,4 +752,34 @@ test('day layout is sticky and two-column on desktop, then readable without over
     () => browser.evaluate(`document.querySelector('.day-picker [aria-current="date"]')?.getAttribute('href') === '#day2'`),
     'Keyboard could not switch days',
   );
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  const switched = await browser.evaluate(`JSON.stringify({
+    dayTop: document.querySelector('#day2').getBoundingClientRect().top,
+    pickerBottom: document.querySelector('.day-picker').getBoundingClientRect().bottom,
+    pickerHeight: document.querySelector('.day-picker').getBoundingClientRect().height,
+    navHeight: document.querySelector('.site-nav-shell').getBoundingClientRect().height,
+    innerWidth,
+    scrollY,
+    selectedVisible: (() => {
+      const selected = document.querySelector('.day-picker [aria-current="date"]').getBoundingClientRect();
+      const picker = document.querySelector('.day-picker').getBoundingClientRect();
+      return selected.left >= picker.left && selected.right <= picker.right;
+    })(),
+  })`).then(JSON.parse);
+  assert.ok(switched.dayTop >= switched.pickerBottom - 2, `Switched day should start below the sticky picker: ${JSON.stringify(switched)}`);
+  assert.equal(switched.selectedVisible, true);
+
+  await browser.setViewport(320, 700);
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('.day-picker').getBoundingClientRect().top >= document.querySelector('.site-nav-shell').getBoundingClientRect().bottom - 2`),
+    'Narrow phone navigation did not settle below the main navigation',
+  );
+  const narrow = await browser.evaluate(`JSON.stringify({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+    pickerTop: document.querySelector('.day-picker').getBoundingClientRect().top,
+    navBottom: document.querySelector('.site-nav-shell').getBoundingClientRect().bottom,
+  })`).then(JSON.parse);
+  assert.equal(narrow.content, narrow.viewport);
+  assert.ok(narrow.pickerTop >= narrow.navBottom - 2, `Narrow phone navigation should not overlap: ${JSON.stringify(narrow)}`);
 });

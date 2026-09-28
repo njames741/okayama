@@ -693,6 +693,25 @@ test('active day exposes journey stages and keeps semantic priority visible', as
   assert.equal(semantics.day5DinnerStage, '下午行程');
 });
 
+test('Himeji bus fares and ICOCA remain visible in the main timeline', async (t) => {
+  const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#day3`);
+  t.after(() => browser.close());
+
+  await waitFor(
+    () => browser.evaluate(`document.querySelector('#day3.is-active-day') !== null`),
+    'Himeji day did not become active',
+  );
+  const busSteps = await browser.evaluate(`JSON.stringify(
+    [...document.querySelectorAll('#day3 .leg.t')]
+      .filter((leg) => ['09:00', '13:35'].includes(leg.querySelector('.when')?.textContent.trim()))
+      .map((leg) => ({ time: leg.querySelector('.when').textContent.trim(), visible: leg.querySelector('.what').innerText }))
+  )`).then(JSON.parse);
+
+  assert.equal(busSteps.length, 2);
+  assert.match(busSteps.find(({ time }) => time === '09:00').visible, /6號站牌.*¥210.*ICOCA/s);
+  assert.match(busSteps.find(({ time }) => time === '13:35').visible, /10號站牌.*¥320.*ICOCA.*套券/s);
+});
+
 test('day layout is sticky and two-column on desktop, then readable without overflow on mobile', async (t) => {
   const browser = await openBrowser(`${pathToFileURL(htmlPath).href}#day4`);
   t.after(() => browser.close());

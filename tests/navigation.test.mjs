@@ -188,11 +188,10 @@ test('pre-trip view prioritizes dated actions and keeps completed records collap
   })`).then(JSON.parse);
 
   assert.deepEqual(state.actions.map(({ deadline }) => deadline), [
-    '2026-09-20',
-    '2026-09-26',
-    '2026-09-27',
+    '2026-09-28',
+    '2026-10-01',
   ]);
-  assert.deepEqual(state.actions.map(({ status }) => status), ['需複查', '待處理', '待處理']);
+  assert.deepEqual(state.actions.map(({ status }) => status), ['需複查', '待處理']);
   for (const action of state.actions) {
     assert.match(action.text, /下一個動作/);
     assert.match(action.text, /完成條件/);
@@ -338,11 +337,11 @@ test('a custom order survives reload and restoring the published version clears 
     selects[1].dispatchEvent(new Event('change', { bubbles: true }));
     document.querySelector('[data-rehearsal-confirm]').click();
   }`);
-  assert.notEqual(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v1')`), null);
+  assert.notEqual(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v2')`), null);
 
   await browser.reload();
   await waitFor(
-    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '姫路城'`),
+    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '倉敷 × 吉備路'`),
     'Saved theme mapping was not restored after reload',
   );
   assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`), /本裝置自訂順序/);
@@ -350,10 +349,10 @@ test('a custom order survives reload and restoring the published version clears 
 
   await browser.evaluate(`document.querySelector('[data-rehearsal-reset]').click()`);
   await waitFor(
-    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '倉敷 × 吉備路'`),
+    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '姫路城'`),
     'Published mapping was not restored',
   );
-  assert.equal(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v1')`), null);
+  assert.equal(await browser.evaluate(`localStorage.getItem('okayama.itinerary.rehearsal.v2')`), null);
   assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`), /目前為發布順序/);
   assert.equal(await browser.evaluate(`document.querySelector('[data-custom-order-banner]').hidden`), true);
 });
@@ -624,10 +623,10 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
   assert.deepEqual(state.topics, [
     '抵達 · 岡山夜色',
     '児島半島日',
-    '倉敷 × 吉備路',
+    '姫路城',
     '豊島 · 藝術跳島',
     '跨瀨戶大橋 × 高松',
-    '姫路城',
+    '倉敷 × 吉備路',
     '岡山後楽園 · 回家',
   ]);
   assert.deepEqual(state.visibleDays, ['day4']);

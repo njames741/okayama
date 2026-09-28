@@ -678,7 +678,7 @@ test('active day exposes journey stages and keeps semantic priority visible', as
   for (const stage of ['去程', '主要行程', '午餐', '下午行程', '回程']) {
     assert.ok(semantics.stages.includes(stage), `Missing ${stage} stage`);
   }
-  for (const text of ['09:15 前決定', '天氣', '10:30 豊島美術館']) {
+  for (const text of ['09:15 前決定', '天氣', '10:00 預約']) {
     assert.match(semantics.choice, new RegExp(text));
   }
   assert.notEqual(semantics.choiceDisplay, 'none');

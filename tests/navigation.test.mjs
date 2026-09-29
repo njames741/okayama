@@ -631,7 +631,7 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
   ]);
   assert.deepEqual(state.visibleDays, ['day4']);
   assert.ok(state.scrollY > 0, 'A Day fragment should move the selected day into view');
-  for (const text of ['9 / 30', '豊島 · 藝術跳島', '07:05', '17:55', '08:40', '10:30', '16:25']) {
+  for (const text of ['9 / 30', '豊島 · 藝術跳島', '07:20', '17:55', '08:40', '10:30', '16:25']) {
     assert.match(state.summary, new RegExp(text.replace('/', '\\/')));
   }
   assert.doesNotMatch(state.summary, /體力/);

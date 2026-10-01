@@ -189,9 +189,8 @@ test('pre-trip view prioritizes dated actions and keeps completed records collap
 
   assert.deepEqual(state.actions.map(({ deadline }) => deadline), [
     '2026-09-28',
-    '2026-10-01',
   ]);
-  assert.deepEqual(state.actions.map(({ status }) => status), ['需複查', '待處理']);
+  assert.deepEqual(state.actions.map(({ status }) => status), ['需複查']);
   for (const action of state.actions) {
     assert.match(action.text, /下一個動作/);
     assert.match(action.text, /完成條件/);
@@ -256,7 +255,7 @@ test('local rehearsal offers only movable themes and previews a theme-to-date sw
     confirmDisabled: document.querySelector('[data-rehearsal-confirm]').disabled,
   })`).then(JSON.parse);
 
-  const expectedThemes = ['児島半島日', '倉敷 × 吉備路', '跨瀨戶大橋 × 高松', '姫路城'];
+  const expectedThemes = ['児島半島日', '倉敷 × 吉備津神社', '跨瀨戶大橋 × 高松', '姫路城'];
   assert.deepEqual(initial.labels[0].map((label) => expectedThemes.find((theme) => label.startsWith(theme))), expectedThemes);
   assert.deepEqual(initial.labels[1].map((label) => expectedThemes.find((theme) => label.startsWith(theme))), expectedThemes);
   assert.ok(initial.labels.flat().every((label) => /目前\s*(9\/28|9\/29|10\/1|10\/2)/.test(label)));
@@ -331,7 +330,7 @@ test('a custom order survives reload and restoring the published version clears 
 
   await browser.evaluate(`{
     const selects = document.querySelectorAll('[data-rehearsal] select');
-    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('倉敷 × 吉備路')).value;
+    selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('倉敷 × 吉備津神社')).value;
     selects[0].dispatchEvent(new Event('change', { bubbles: true }));
     selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('姫路城')).value;
     selects[1].dispatchEvent(new Event('change', { bubbles: true }));
@@ -341,7 +340,7 @@ test('a custom order survives reload and restoring the published version clears 
 
   await browser.reload();
   await waitFor(
-    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '倉敷 × 吉備路'`),
+    () => browser.evaluate(`document.querySelector('#day3')?.dataset.title === '倉敷 × 吉備津神社'`),
     'Saved theme mapping was not restored after reload',
   );
   assert.match(await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`), /本裝置自訂順序/);
@@ -367,12 +366,12 @@ test('a storage write failure keeps the current swap usable and explains that it
     const selects = document.querySelectorAll('[data-rehearsal] select');
     selects[0].value = [...selects[0].options].find((option) => option.textContent.startsWith('児島半島日')).value;
     selects[0].dispatchEvent(new Event('change', { bubbles: true }));
-    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('倉敷 × 吉備路')).value;
+    selects[1].value = [...selects[1].options].find((option) => option.textContent.startsWith('倉敷 × 吉備津神社')).value;
     selects[1].dispatchEvent(new Event('change', { bubbles: true }));
     document.querySelector('[data-rehearsal-confirm]').click();
   }`);
   await waitFor(
-    () => browser.evaluate(`document.querySelector('#day2')?.dataset.title === '倉敷 × 吉備路'`),
+    () => browser.evaluate(`document.querySelector('#day2')?.dataset.title === '倉敷 × 吉備津神社'`),
     'In-memory swap did not survive a storage failure',
   );
   const status = await browser.evaluate(`document.querySelector('[data-rehearsal-status]').innerText`);
@@ -626,7 +625,7 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
     '姫路城',
     '豊島 · 藝術跳島',
     '跨瀨戶大橋 × 高松',
-    '倉敷 × 吉備路',
+    '倉敷 × 吉備津神社',
     '岡山後楽園 · 回家',
   ]);
   assert.deepEqual(state.visibleDays, ['day4']);

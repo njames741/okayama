@@ -626,7 +626,7 @@ test('day selector keeps fixed dates and shows one requested itinerary day', asy
     '豊島 · 藝術跳島',
     '跨瀨戶大橋 × 高松',
     '倉敷 × 吉備津神社',
-    '岡山後楽園 · 回家',
+    '後楽園 × 岡山城 · 回家',
   ]);
   assert.deepEqual(state.visibleDays, ['day4']);
   assert.ok(state.scrollY > 0, 'A Day fragment should move the selected day into view');
